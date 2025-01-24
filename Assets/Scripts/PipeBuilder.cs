@@ -26,8 +26,13 @@ public class PipeBuilder : MonoBehaviour
     protected Tile right;
     protected Tile left;
 
+
     void Start()
     {
+
+    }
+
+    void AfterSerialiar(){
         tilemap = PipeHelper.tilemap;
         tiles = PipeHelper.tiles;
         beforeSerialize();
@@ -59,6 +64,7 @@ public class PipeBuilder : MonoBehaviour
                 }
             }
         }
+
     }
 
     public void beforeSerialize()
@@ -98,6 +104,9 @@ public class PipeBuilder : MonoBehaviour
     }
     void Update()
     {
+        if(tiles == null && PipeHelper.tiles != null){
+            AfterSerialiar();
+        }
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
