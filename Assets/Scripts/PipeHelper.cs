@@ -123,6 +123,7 @@ public class PipeHelper : MonoBehaviour
             int[] existingKey = pipes.Keys.First(k =>
                 k[0] == key[0] && k[1] == key[1] && k[2] == key[2]);
             pipes[existingKey] = value;
+            Check();
             return;
         }
         pipes.Add(key, value);
