@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class PipeBuilder : MonoBehaviour
 {
     public static Tilemap[] layers;
-    private Tilemap tilemap;
+    private Tilemap[] tilemap;
     private RuleTile[] tiles;
 
     [SerializeField]
@@ -26,13 +26,8 @@ public class PipeBuilder : MonoBehaviour
     protected Tile right;
     protected Tile left;
 
-
     void Start()
     {
-
-    }
-
-    void AfterSerialiar(){
         tilemap = PipeHelper.tilemap;
         tiles = PipeHelper.tiles;
         beforeSerialize();
@@ -64,7 +59,6 @@ public class PipeBuilder : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void beforeSerialize()
@@ -104,9 +98,6 @@ public class PipeBuilder : MonoBehaviour
     }
     void Update()
     {
-        if(tiles == null && PipeHelper.tiles != null){
-            AfterSerialiar();
-        }
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -126,14 +117,20 @@ public class PipeBuilder : MonoBehaviour
                     Vector2 position = Camera.main.ScreenToWorldPoint(touch.position);
                     if (!UIDetection.IsTapOnUI(position) && OpenMenu.isMenuOpened)
                     {
-                        Vector3Int cellPosition = tilemap.WorldToCell(position);
+                        Vector3Int cellPosition = tilemap[currentLayer].WorldToCell(position);
                         PipeHelper.Place(cellPosition);
                     }
                     else
                     {
                         TileBase clickedTile = selectNyil.GetTile(selectNyil.WorldToCell(position));
-                        if (clickedTile == left) SelectPipe(selectedPipe -= 1);
-                        else if (clickedTile == right) SelectPipe(selectedPipe += 1);
+                        if (clickedTile == left) {
+                            if(selectedPipe == 0) SelectPipe(tiles.Length - 1);
+                            else SelectPipe(selectedPipe -= 1);
+                            }
+                        else if (clickedTile == right){
+                            if(selectedPipe == tiles.Length - 1) SelectPipe(0);
+                            else SelectPipe(selectedPipe += 1);
+                        }
                     }
                 }
             }

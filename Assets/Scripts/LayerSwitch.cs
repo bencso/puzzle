@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 public class Layer : MonoBehaviour
 {
     public Tilemap tilemap;
@@ -9,6 +10,7 @@ public class Layer : MonoBehaviour
     protected Tile down;
     private Vector2 touchStartPosition;
     private float touchStartTime;
+    public TMP_Text text;
     void Start()
     {
         if (tilemap != null)
@@ -46,8 +48,18 @@ public class Layer : MonoBehaviour
                 {
                     Vector2 position = Camera.main.ScreenToWorldPoint(touch.position);
                     TileBase clickedTile = tilemap.GetTile(tilemap.WorldToCell(position));
-                    if (clickedTile == up) PipeBuilder.SetLayer(0);
-                    else if (clickedTile == down) PipeBuilder.SetLayer(1);
+                    if (clickedTile == up) {
+                        PipeBuilder.SetLayer(0);
+                        text.text = "Szint: 0";
+                        PipeHelper.tmpTilemap.ClearAllTiles();
+                        PipeHelper.Check();
+                        }
+                    else if (clickedTile == down){
+                        PipeBuilder.SetLayer(1);
+                        text.text = "Szint: -1";
+                        PipeHelper.tmpTilemap.ClearAllTiles();
+                        PipeHelper.Check();
+                    }
                 }
             }
         }
