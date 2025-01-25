@@ -113,6 +113,8 @@ public class PipeHelper : MonoBehaviour
         tempPipes.Add(new Dictionary<int[], string> { { key, value } });
     }
 
+    
+
     public static void AddPipe(int[] key, string value)
     {
         if (Exists(key))
@@ -121,7 +123,6 @@ public class PipeHelper : MonoBehaviour
             int[] existingKey = pipes.Keys.First(k =>
                 k[0] == key[0] && k[1] == key[1] && k[2] == key[2]);
             pipes[existingKey] = value;
-            Check();
             return;
         }
         pipes.Add(key, value);
