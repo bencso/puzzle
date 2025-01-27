@@ -13,6 +13,14 @@ public class PipeHelper : MonoBehaviour
     private RuleTile[] tmpTilesHelper;
     [SerializeField]
     private Tilemap tempTilemapHelper;
+    [SerializeField]
+    private Tilemap buzaTilemapHelper;
+
+    [SerializeField]
+    private Tile[] buzatilesHelper;
+    public static Tile[] buzatiles;
+
+    public static Tilemap buzaTilemap;
     public static Tilemap tmpTilemap;
     public static RuleTile[] tmpTiles;
     public static Tilemap[] tilemap;
@@ -33,6 +41,8 @@ public class PipeHelper : MonoBehaviour
         tiles = tilesHelper;
         tmpTiles = tmpTilesHelper;
         tmpTilemap = tempTilemapHelper;
+        buzaTilemap = buzaTilemapHelper;
+        buzatiles = buzatilesHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
         startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
         endPoints.Add("electric", new List<int[]> { new int[] { -3, 1, 0 } });
@@ -113,7 +123,7 @@ public class PipeHelper : MonoBehaviour
         tempPipes.Add(new Dictionary<int[], string> { { key, value } });
     }
 
-    
+
 
     public static void AddPipe(int[] key, string value)
     {
@@ -126,9 +136,50 @@ public class PipeHelper : MonoBehaviour
             Check();
             return;
         }
+
         pipes.Add(key, value);
         Debug.Log($"{value} placed at {key[0]}, {key[1]}, {key[2]}");
+
+        if (key[2] == 0)
+        {
+            if (GetBuzaTile(0, key, 0))
+            {
+                buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
+                SorroundPlaceBuza(key);
+            }
+        }
+        else if (key[2] == 1)
+        {
+            if (GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1))
+            {
+                buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
+                SorroundPlaceBuza(key);
+            }
+        }
+
         Check();
+    }
+
+    public static bool GetBuzaTile(int layer, int[] key, int buzaType)
+    {
+        return buzaTilemap.GetTile(new Vector3Int(key[0], key[1], layer)) == buzatiles[buzaType];
+    }
+
+    public static void SorroundPlaceBuza(int[] key)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0) continue;
+                var surroundPos = new Vector3Int(key[0] + x, key[1] + y, 0);
+                var surroundTile = buzaTilemap.GetTile(surroundPos);
+                if (surroundTile == buzatiles[0])
+                {
+                    buzaTilemap.SetTile(surroundPos, buzatiles[1]);
+                }
+            }
+        }
     }
 
     public static void Check()
