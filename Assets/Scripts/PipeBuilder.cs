@@ -118,17 +118,22 @@ public class PipeBuilder : MonoBehaviour
                     if (!UIDetection.IsTapOnUI(position) && OpenMenu.isMenuOpened)
                     {
                         Vector3Int cellPosition = tilemap[currentLayer].WorldToCell(position);
-                        PipeHelper.Place(cellPosition);
+                        if (selectedPipe == 2)
+                            PipeHelper.Remove(cellPosition);
+                        else
+                            PipeHelper.Place(cellPosition);
                     }
                     else
                     {
                         TileBase clickedTile = selectNyil.GetTile(selectNyil.WorldToCell(position));
-                        if (clickedTile == left) {
-                            if(selectedPipe == 0) SelectPipe(tiles.Length - 1);
+                        if (clickedTile == left)
+                        {
+                            if (selectedPipe == 0) SelectPipe(tiles.Length - 1);
                             else SelectPipe(selectedPipe -= 1);
-                            }
-                        else if (clickedTile == right){
-                            if(selectedPipe == tiles.Length - 1) SelectPipe(0);
+                        }
+                        else if (clickedTile == right)
+                        {
+                            if (selectedPipe == tiles.Length - 1) SelectPipe(0);
                             else SelectPipe(selectedPipe += 1);
                         }
                     }

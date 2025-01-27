@@ -577,6 +577,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -5121,7 +5134,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pendroid_assets_206
+      name: hal
       rect:
         serializedVersion: 2
         x: 112
@@ -5693,7 +5706,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pendroid_assets_232
+      name: buzalent
       rect:
         serializedVersion: 2
         x: 40
@@ -6353,7 +6366,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pendroid_assets_262
+      name: buza
       rect:
         serializedVersion: 2
         x: 40
@@ -7629,7 +7642,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pendroid_assets_320
+      name: csont
       rect:
         serializedVersion: 2
         x: 160
@@ -8060,6 +8073,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      buza: -174084388
+      buzalent: 803977555
+      csont: -52981889
+      hal: -781233674
       pendroid_assets_0: -6172330034491703884
       pendroid_assets_1: -2313291198098665720
       pendroid_assets_10: -6791090794798623210
@@ -8180,7 +8197,6 @@ TextureImporter:
       pendroid_assets_203: -835703267
       pendroid_assets_204: 625968878
       pendroid_assets_205: 1363615862
-      pendroid_assets_206: -781233674
       pendroid_assets_207: 1913574531
       pendroid_assets_208: 501603182
       pendroid_assets_209: -339793842
@@ -8209,7 +8225,6 @@ TextureImporter:
       pendroid_assets_23: 4245354564101072082
       pendroid_assets_230: 78021940
       pendroid_assets_231: 1122821156
-      pendroid_assets_232: 803977555
       pendroid_assets_233: -1313770652
       pendroid_assets_234: 583199045
       pendroid_assets_235: -1081739283
@@ -8242,7 +8257,6 @@ TextureImporter:
       pendroid_assets_26: -109584948496907907
       pendroid_assets_260: 1039090638
       pendroid_assets_261: -871837867
-      pendroid_assets_262: -174084388
       pendroid_assets_263: 365939140
       pendroid_assets_264: -1693017591
       pendroid_assets_265: 1787932304
@@ -8307,7 +8321,6 @@ TextureImporter:
       pendroid_assets_318: -1815851302
       pendroid_assets_319: -1323444824
       pendroid_assets_32: -2707771370520295955
-      pendroid_assets_320: -52981889
       pendroid_assets_321: -198834113
       pendroid_assets_322: 370446948
       pendroid_assets_323: 1374564926
