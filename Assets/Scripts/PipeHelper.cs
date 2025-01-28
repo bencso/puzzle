@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
+using System;
 
 [System.Serializable]
 public class Utility
@@ -54,7 +55,8 @@ public class PipeHelper : MonoBehaviour
     private static Dictionary<string, List<int[]>> startPoints = new Dictionary<string, List<int[]>>();
     private static Dictionary<string, List<int[]>> endPoints = new Dictionary<string, List<int[]>>();
 
-    private static List<int[]> route = new List<int[]>();
+    private static List<List<int[]>> routes = new List<List<int[]>>();
+
     public static string tempTileType = null;
 
     void Start()
@@ -69,9 +71,11 @@ public class PipeHelper : MonoBehaviour
         talajTilemap = talajTilemapHelper;
         elements = elementsHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
-        startPoints.Add("water", new List<int[]> { new int[] { -3, -5, 0 } });
-        endPoints.Add("electric", new List<int[]> { new int[] { -3, 1, 0 } });
-        endPoints.Add("water", new List<int[]> { new int[] { 0, 0, 0 } });
+        startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
+        endPoints.Add("electric", new List<int[]>());
+        endPoints["electric"].Add(new int[] { -3, 1, 0 });
+        endPoints["electric"].Add(new int[] { -3, -1, 0 });
+        endPoints.Add("water", new List<int[]> { new int[] { 0, 1, 0 } });
 
         if (utilities != null && utilities.Length > 0)
         {
@@ -134,7 +138,7 @@ public class PipeHelper : MonoBehaviour
 
     public static void Test()
     {
-        if (pipes != null && pipes.Count > 0) Debug.Log(pipes.Count);
+        // if (pipes != null && pipes.Count > 0) Debug.Log(pipes.Count);
     }
 
     public static void Place(Vector3Int position)
@@ -167,6 +171,13 @@ public class PipeHelper : MonoBehaviour
         }
 
 
+        Debug.Log(position.z);
+        if(Exists(new int[] { position.x, position.y, position.z})) {
+            if(pipes[GetPipeKey(new int[] { position.x, position.y, position.z})] != tiles[selectedPipe].name) {
+                return;
+            }
+        }
+
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
         PipeHelper.Test();
@@ -185,13 +196,22 @@ public class PipeHelper : MonoBehaviour
         Check();
         foreach (var key in pipes.Keys.ToList())
         {
-            if (!route.Any(r => r[0] == key[0] && r[1] == key[1] && r[2] == key[2]))
+            bool isPartOfRoute = false;
+            foreach (var route in routes)
+            {
+                if (route.Any(r => r[0] == key[0] && r[1] == key[1] && r[2] == key[2]))
+                {
+                    isPartOfRoute = true;
+                    break;
+                }
+            }
+
+            if (!isPartOfRoute)
             {
                 tilemap[key[2]].SetTile(new Vector3Int(key[0], key[1], 0), null);
                 pipes.Remove(GetPipeKey(new int[] { key[0], key[1], key[2] }));
                 PlaceElements();
             }
-
         }
         Check();
     }
@@ -206,57 +226,52 @@ public class PipeHelper : MonoBehaviour
     {
         tmpTilemap.ClearAllTiles();
         tempPipes.Clear();
-        var pipeType = tiles[selectedPipe];
-        var ends = new List<int[]>();
-        if (tempTileType != null)
+        foreach (var route in routes)
         {
-            ends = GetRouteEndPositions(startPoints[tempTileType][0], tempTileType);
-        }
-        else
-        {
-            ends = GetRouteEndPositions(startPoints[pipeType.name][0], pipeType.name);
-        }
-        foreach (var pos in route)
-        {
-            tilemap[PipeBuilder.currentLayer].CompressBounds();
-            BoundsInt uiBounds = tilemap[PipeBuilder.currentLayer].cellBounds;
-            TileBase[] allTiles = tilemap[PipeBuilder.currentLayer].GetTilesBlock(uiBounds);
-            if (PipeBuilder.currentLayer != pos[2]
-            && tilemap[PipeBuilder.currentLayer].GetTile(new Vector3Int(pos[0], pos[1], pos[2])) == null
-            && ends.Any(e => e.SequenceEqual(pos)))
+            var pipeType = tiles[selectedPipe];
+            var ends = new List<int[]>();
+            ends = GetRouteEndPositions(route);
+
+
+            foreach (var pos in route)
             {
-                if (!Exists(new int[] { pos[0], pos[1], (pos[2] == 0 ? 1 : 0) }))
+                tilemap[PipeBuilder.currentLayer].CompressBounds();
+                BoundsInt uiBounds = tilemap[PipeBuilder.currentLayer].cellBounds;
+                TileBase[] allTiles = tilemap[PipeBuilder.currentLayer].GetTilesBlock(uiBounds);
+                if (PipeBuilder.currentLayer != pos[2]
+                && tilemap[PipeBuilder.currentLayer].GetTile(new Vector3Int(pos[0], pos[1], pos[2])) == null
+                && ends.Any(e => e.SequenceEqual(pos)))
                 {
-                    if (!(PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(new Vector3Int(pos[0], pos[1], 0)).name == "VizA"))
+                    if (!Exists(new int[] { pos[0], pos[1], (pos[2] == 0 ? 1 : 0) }))
                     {
                         tmpTilemap.SetTile(new Vector3Int(pos[0], pos[1], PipeBuilder.currentLayer), tmpTiles[0]);
                         AddTemp(new int[] { pos[0], pos[1], PipeBuilder.currentLayer }, "temp");
                     }
                 }
-            }
-            var adjacentPositions = new List<int[]>();
+                var adjacentPositions = new List<int[]>();
 
-            adjacentPositions.Add(new int[] { pos[0] + 1, pos[1], pos[2] });
-            adjacentPositions.Add(new int[] { pos[0] - 1, pos[1], pos[2] });
-            adjacentPositions.Add(new int[] { pos[0], pos[1] + 1, pos[2] });
-            adjacentPositions.Add(new int[] { pos[0], pos[1] - 1, pos[2] });
+                adjacentPositions.Add(new int[] { pos[0] + 1, pos[1], pos[2] });
+                adjacentPositions.Add(new int[] { pos[0] - 1, pos[1], pos[2] });
+                adjacentPositions.Add(new int[] { pos[0], pos[1] + 1, pos[2] });
+                adjacentPositions.Add(new int[] { pos[0], pos[1] - 1, pos[2] });
 
-            foreach (var adjacentPos in adjacentPositions)
-            {
-                var tilePosition = new Vector3Int(adjacentPos[0], adjacentPos[1], adjacentPos[2]);
-                if (Exists(adjacentPos) ||
-                pos[2] != PipeBuilder.currentLayer ||
-                tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null)
+                foreach (var adjacentPos in adjacentPositions)
                 {
-                    continue;
+                    var tilePosition = new Vector3Int(adjacentPos[0], adjacentPos[1], adjacentPos[2]);
+                    if (Exists(adjacentPos) ||
+                    pos[2] != PipeBuilder.currentLayer ||
+                    tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null)
+                    {
+                        continue;
+                    }
+                    if (tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null ||
+                    (PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(tilePosition).name == "VizA") ||
+                    (buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) != null &&
+                    buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)).name == "pendroid_assets_326" && PipeBuilder.currentLayer == 0))
+                        continue;
+                    tmpTilemap.SetTile(new Vector3Int(tilePosition[0], tilePosition[1], PipeBuilder.currentLayer), tmpTiles[0]);
+                    AddTemp(new int[] { tilePosition[0], tilePosition[1], PipeBuilder.currentLayer }, "temp");
                 }
-                if (tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null ||
-                (PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(tilePosition).name == "VizA") ||
-                (buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) != null &&
-                buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) == utilities[3].tile && PipeBuilder.currentLayer == 0))
-                    continue;
-                tmpTilemap.SetTile(new Vector3Int(tilePosition[0], tilePosition[1], PipeBuilder.currentLayer), tmpTiles[0]);
-                AddTemp(new int[] { tilePosition[0], tilePosition[1], PipeBuilder.currentLayer }, "temp");
             }
         }
     }
@@ -287,6 +302,8 @@ public class PipeHelper : MonoBehaviour
             }
         }
 
+        
+
         if (tmpTilemap.GetTile(new Vector3Int(pos[0], pos[1], pos[2])) != null)
         {
             return true;
@@ -299,20 +316,21 @@ public class PipeHelper : MonoBehaviour
     {
         if (Exists(key))
         {
-            Debug.Log($"Pipe already exists at {key[0]}, {key[1]}, {key[2]}");
+            // Debug.Log($"Pipe already exists at {key[0]}, {key[1]}, {key[2]}");
             int[] existingKey = pipes.Keys.First(k =>
                 k[0] == key[0] && k[1] == key[1] && k[2] == key[2]);
             pipes[existingKey] = value;
             Check();
+
             return;
         }
 
         pipes.Add(key, value);
-        Debug.Log($"{value} placed at {key[0]}, {key[1]}, {key[2]}");
+        // Debug.Log($"{value} placed at {key[0]}, {key[1]}, {key[2]}");
 
         Check();
 
-        Debug.Log(tiles[selectedPipe].name);
+        //Debug.Log(tiles[selectedPipe].name);
 
         if (tiles[selectedPipe].name == "electric")
         {
@@ -321,7 +339,7 @@ public class PipeHelper : MonoBehaviour
                     .Select(y => new Vector3Int(key[0] + x, key[1] + y, 0)))
                 .Any(pos => buzaTilemap.GetTile(pos) == buzatiles[0]);
 
-            if (hasBuzaNearby)
+            if ((hasBuzaNearby || GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1)) && buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) != null)
             {
                 if (key[2] == 0)
                 {
@@ -330,13 +348,13 @@ public class PipeHelper : MonoBehaviour
                 }
                 if (key[2] == 1)
                 {
+                    buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
                     SorroundPlaceBuza(key);
                 }
             }
         }
 
-        if (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "VizA" ||
-        (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "Bridge" && key[2] == 1))
+        if (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "VizA" || (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "Bridge" && key[2] == 1))
             SorroundGetHal(key);
     }
 
@@ -355,7 +373,7 @@ public class PipeHelper : MonoBehaviour
                 var surroundPos = new Vector3Int(key[0] + x, key[1] + y, 0);
                 var surroundTile = buzaTilemap.GetTile(surroundPos);
 
-                if (surroundTile != null && surroundTile == utilities[4].tile)
+                if (surroundTile != null && surroundTile.name == "pendroid_assets_207")
                 {
                     buzaTilemap.SetTile(surroundPos, utilities[2].tile);
                 }
@@ -383,12 +401,53 @@ public class PipeHelper : MonoBehaviour
     public static void Check()
     {
         var pipeTypes = pipes.Values.Distinct().ToList();
-        Debug.Log($"Pipe types: {string.Join(", ", pipeTypes)}");
-        foreach (var pipeType in pipeTypes)
+        // Debug.Log($"Pipe types: {string.Join(", ", pipeTypes)}");
+        GetAllRoutes();
+        bool isLevelNotCompleted = false;
+        foreach (var pipeType in endPoints.Keys)
         {
-            if (GetPipeRoute(startPoints[pipeType][0], pipeType) != null) PrintPipeRoute(startPoints[pipeType][0], pipeType);
+            Debug.Log($"Pipe type: {pipeType}");
+            //PrintPipeRoute(startPoints[pipeType][0], pipeType)
+            // var startPos = startPoints[pipeType][0];
+            foreach (var startPos in startPoints[pipeType])
+            {
+            Debug.Log($"Pipe type: {pipeType} | startPos: {startPos[0]}, {startPos[1]}, {startPos[2]}");
+
+                if(routes.Where(r => r.Any(pos => pos[0] == startPos[0] && pos[1] == startPos[1] && pos[2] == startPos[2])).Count() == 0) {
+                    Debug.Log($"No route found for {pipeType}");
+                    isLevelNotCompleted = true;
+                    break;
+                }
+                foreach (var route in routes.Where(r => r.Any(pos => pos[0] == startPos[0] && pos[1] == startPos[1] && pos[2] == startPos[2])))
+                {
+                    foreach (var endPoint in endPoints[pipeType])
+                    {
+                        // Debug.Log($"Is completed: {isCompleted(route, endPoint, pipeType)} {pipeType}");
+                        if (isCompleted(route, endPoint, pipeType))
+                        {
+                            Debug.Log($"Route completed: {route.Count} {pipeType}");
+                        }
+                        else
+                        {
+                            Debug.Log($"Route not completed: {route.Count} {pipeType}");
+                            isLevelNotCompleted = true;
+                        }
+                    }
+                }
+            }
+
+
         }
-        Debug.Log("Checking completed");
+
+                    if (!isLevelNotCompleted)
+            {
+                Debug.Log($"Level completed");
+            }
+            else
+            {
+                Debug.Log($"Level not completed");
+            }
+        // Debug.Log("Checking completed");
         getValidTiles();
     }
 
@@ -403,18 +462,32 @@ public class PipeHelper : MonoBehaviour
 
     }
 
+    public static void GetAllRoutes()
+    {
+        routes.Clear();
+        var route = new List<int[]>();
+        foreach (var startingPoint in startPoints)
+        {
+            string pipeType = startingPoint.Key;
+            foreach (var startPos in startingPoint.Value)
+            {
+                route = GetPipeRoute(startPos, pipeType);
+                if (route != null) routes.Add(route);
+            }
+        }
+        Debug.Log($"Found {routes.Count} routes");
+    }
+
     public static List<int[]> GetPipeRoute(int[] startPos, string pipeType)
     {
-        route.Clear();
         HashSet<string> visited = new HashSet<string>();
-        TraceRoute(startPos, visited, route, pipeType);
+        var route = new List<int[]>();
+        route = TraceRoute(startPos, visited, route, pipeType);
         return route;
     }
 
-    public static List<int[]> GetRouteEndPositions(int[] startPos, string pipeType)
+    public static List<int[]> GetRouteEndPositions(List<int[]> route)
     {
-        route = GetPipeRoute(startPos, pipeType).Distinct().ToList();
-        Debug.Log($"Route length: {route.Count}");
         List<int[]> endPositions = new List<int[]>();
 
         foreach (var pos in route)
@@ -464,13 +537,11 @@ public class PipeHelper : MonoBehaviour
 
         return endPositions;
     }
-
-    private static void TraceRoute(int[] currentPos, HashSet<string> visited, List<int[]> route, string pipeType)
+    private static List<int[]> TraceRoute(int[] currentPos, HashSet<string> visited, List<int[]> route, string pipeType)
     {
         string posKey = $"{currentPos[0]},{currentPos[1]},{currentPos[2]}";
-
         if (visited.Contains(posKey) || !Exists(currentPos))
-            return;
+            return route;
 
         visited.Add(posKey);
         route.Add(currentPos);
@@ -508,29 +579,30 @@ public class PipeHelper : MonoBehaviour
                 }
             }
         }
+        return route;
     }
 
-    public static bool isCompleted(int[] startPos, int[] endPos, string pipeType)
+    public static bool isCompleted(List<int[]> route, int[] endPoint, string pipeType)
     {
-        route = GetPipeRoute(startPos, pipeType);
-        var endposes = GetRouteEndPositions(startPos, pipeType);
-        return endposes.Find(pos => pos.SequenceEqual(endPos)) != null || route.Find(pos => pos.SequenceEqual(endPos)) != null;
+        // Log($"endpoints: {endPoints[pipeType].Count}");
+        if (route.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2]))
+        {
+            return true;
+        }
+        return false;
     }
 
     public static void PrintPipeRoute(int[] startPos, string pipeType)
     {
-        route = GetPipeRoute(startPos, pipeType);
-        List<int[]> endPositions = GetRouteEndPositions(startPos, pipeType);
-        Debug.Log($"Found route with {route.Count} connected pipes:");
+        // Debug.Log($"Found route with {route.Count} connected pipes:");
         Debug.Log("--------------------------------");
-        Debug.Log($"Found {endPositions.Count} end positions:");
-        foreach (var endPos in endPositions)
+        foreach (var route in routes.Where(r => r.Any(pos => pos[0] == startPos[0] && pos[1] == startPos[1] && pos[2] == startPos[2])))
         {
-            Debug.Log($"Route ends at: ({endPos[0]}, {endPos[1]}, {endPos[2]})");
+            foreach (var endPoint in endPoints[pipeType])
+            {
+                Debug.Log($"Is completed: {isCompleted(route, endPoint, pipeType)} {pipeType}");
+            }
         }
-        Debug.Log("--------------------------------");
-        int[] destinationPos = endPoints[pipeType][0];
-        Debug.Log($"Is completed: {isCompleted(startPos, destinationPos, pipeType)}");
     }
 }
 
