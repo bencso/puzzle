@@ -10,6 +10,13 @@ public class Utility
     public Tile tile;
 }
 
+[System.Serializable]
+public class Element
+{
+    public string name;
+    public Vector2Int position;
+}
+
 public class PipeHelper : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +35,9 @@ public class PipeHelper : MonoBehaviour
     private Utility[] utilitiesHelper;
     [SerializeField]
     private Tilemap talajTilemapHelper;
+    [SerializeField]
+    private Element[] elementsHelper;
+    public static Element[] elements;
     public static Tile[] buzatiles;
     public static Tilemap buzaTilemap;
     public static Tilemap tmpTilemap;
@@ -57,6 +67,7 @@ public class PipeHelper : MonoBehaviour
         buzatiles = buzatilesHelper;
         utilities = utilitiesHelper;
         talajTilemap = talajTilemapHelper;
+        elements = elementsHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
         startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
         endPoints.Add("electric", new List<int[]> { new int[] { -3, 1, 0 } });
@@ -79,7 +90,43 @@ public class PipeHelper : MonoBehaviour
                 }
             }
         }
+
+        PlaceElements();
     }
+
+    public static void PlaceElements()
+    {
+        foreach (var element in elements)
+        {
+            var tilePos = new Vector3Int(element.position.x, element.position.y, 0);
+            var currentTile = buzaTilemap.GetTile(tilePos);
+
+            var electricNearby = Enumerable.Range(-1, 3)
+                .SelectMany(x => Enumerable.Range(1, 3)
+                    .Select(y => new Vector3Int(element.position.x + x, element.position.y + y, 0)))
+                .Any(pos => tilemap[0].GetTile(pos)?.name == "electric")
+                || Enumerable.Range(-1, 3).SelectMany(x => Enumerable.Range(1, 3)
+                    .Select(y => new Vector3Int(element.position.x + x, element.position.y + y, 0)))
+                .Any(pos => tilemap[1].GetTile(pos)?.name == "electric");
+
+            if (!electricNearby &&
+            (currentTile == null ||
+            currentTile == buzatiles[1] ||
+            currentTile == buzatiles[2]))
+            {
+                switch (element.name)
+                {
+                    case "buza":
+                        buzaTilemap.SetTile(tilePos, buzatiles[0]);
+                        break;
+                    case "hegy":
+                        buzaTilemap.SetTile(tilePos, utilities[3].tile);
+                        break;
+                }
+            }
+        }
+    }
+
 
     public static void Test()
     {
@@ -123,7 +170,9 @@ public class PipeHelper : MonoBehaviour
             {
                 tilemap[key[2]].SetTile(new Vector3Int(key[0], key[1], 0), null);
                 pipes.Remove(GetPipeKey(new int[] { key[0], key[1], key[2] }));
+                PlaceElements();
             }
+
         }
         Check();
     }
@@ -243,20 +292,27 @@ public class PipeHelper : MonoBehaviour
 
         Debug.Log(tiles[selectedPipe].name);
 
-        if (tiles[selectedPipe].name == "electric" && (GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1)))
+        if (tiles[selectedPipe].name == "electric")
         {
-            if (key[2] == 0)
+            bool hasBuzaNearby = Enumerable.Range(-1, 3)
+                .SelectMany(x => Enumerable.Range(1, 3)
+                    .Select(y => new Vector3Int(key[0] + x, key[1] + y, 0)))
+                .Any(pos => buzaTilemap.GetTile(pos) == buzatiles[0]);
+
+            if ((hasBuzaNearby || GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1)) && buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) != null)
             {
-                buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
-                SorroundPlaceBuza(key);
-            }
-            if (key[2] == 1)
-            {
-                buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
-                SorroundPlaceBuza(key);
+                if (key[2] == 0)
+                {
+                    buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
+                    SorroundPlaceBuza(key);
+                }
+                if (key[2] == 1)
+                {
+                    buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
+                    SorroundPlaceBuza(key);
+                }
             }
         }
-
 
         if (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "VizA" || (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "Bridge" && key[2] == 1))
             SorroundGetHal(key);
@@ -264,7 +320,6 @@ public class PipeHelper : MonoBehaviour
 
     public static bool GetBuzaTile(int layer, int[] key, int buzaType)
     {
-        Debug.Log($"Checking buza tile at {key[0]}, {key[1]}, {layer}");
         return buzaTilemap.GetTile(new Vector3Int(key[0], key[1], layer)) == buzatiles[buzaType];
     }
 
@@ -286,7 +341,6 @@ public class PipeHelper : MonoBehaviour
         }
     }
 
-
     public static void SorroundPlaceBuza(int[] key)
     {
         for (int x = -1; x <= 1; x++)
@@ -296,8 +350,7 @@ public class PipeHelper : MonoBehaviour
                 if (x == 0 && y == 0) continue;
                 var surroundPos = new Vector3Int(key[0] + x, key[1] + y, 0);
                 var surroundTile = buzaTilemap.GetTile(surroundPos);
-                if (surroundTile == buzatiles[0])
-
+                if (surroundTile != null && surroundTile == buzatiles[0])
                 {
                     buzaTilemap.SetTile(surroundPos, buzatiles[1]);
                 }
