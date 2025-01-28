@@ -118,7 +118,7 @@ public class PipeBuilder : MonoBehaviour
                     if (!UIDetection.IsTapOnUI(position) && OpenMenu.isMenuOpened)
                     {
                         Vector3Int cellPosition = tilemap[currentLayer].WorldToCell(position);
-                        if (selectedPipe == 2)
+                        if (selectedPipe == 3)
                             PipeHelper.Remove(cellPosition);
                         else
                             PipeHelper.Place(cellPosition);

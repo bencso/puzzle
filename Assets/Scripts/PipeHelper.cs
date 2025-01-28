@@ -72,10 +72,13 @@ public class PipeHelper : MonoBehaviour
         elements = elementsHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
         startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
+        startPoints.Add("sewage", new List<int[]> { new int[] { -10, -6, 0 } });
         endPoints.Add("electric", new List<int[]>());
         endPoints["electric"].Add(new int[] { -3, 1, 0 });
         endPoints["electric"].Add(new int[] { -3, -1, 0 });
+
         endPoints.Add("water", new List<int[]> { new int[] { 0, 1, 0 } });
+        endPoints.Add("sewage", new List<int[]> { new int[] { -10, -4, 0 } });
 
         if (utilities != null && utilities.Length > 0)
         {
@@ -83,14 +86,22 @@ public class PipeHelper : MonoBehaviour
             {
                 foreach (var pos in endpoint.Value)
                 {
-                    buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[0].tile);
+                    if(endpoint.Key == "sewage") {
+                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[5].tile);
+                    } else {
+                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[0].tile);
+                    }
                 }
             }
             foreach (var startpoint in startPoints)
             {
                 foreach (var pos in startpoint.Value)
                 {
-                    buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[1].tile);
+                    if(startpoint.Key == "sewage") {
+                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[5].tile);
+                    } else {
+                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[1].tile);
+                    }
                 }
             }
         }
@@ -141,37 +152,73 @@ public class PipeHelper : MonoBehaviour
         // if (pipes != null && pipes.Count > 0) Debug.Log(pipes.Count);
     }
 
-    public static void Place(Vector3Int position)
+    public static List<Vector3Int> GetAdjacentPositions(Vector3Int position)
     {
-        int selectedPipe = PipeBuilder.selectedPipe;
-        if (!canBePlaced(new int[] { position.x, position.y, PipeBuilder.currentLayer }))
-        {
-            return;
-        }
-
-        var pipeType = tiles[selectedPipe].name;
-        if (pipeType != "water" && pipeType != "electric") return;
-
-        var adjacentPositions = new List<Vector3Int>
+        return new List<Vector3Int>
         {
             position + Vector3Int.right,
             position + Vector3Int.left,
             position + Vector3Int.up,
             position + Vector3Int.down
         };
+    }
 
-        string incompatibleType = pipeType == "water" ? "electric" : "water";
+    public static void Place(Vector3Int position)
+    {
+        int selectedPipe = PipeBuilder.selectedPipe;
+        Debug.Log(tiles[selectedPipe].name);
+        if (!canBePlaced(new int[] { position.x, position.y, PipeBuilder.currentLayer }))
+        {
+            return;
+        }
+
+        var pipeType = tiles[selectedPipe].name;
+        if (pipeType != "water" && pipeType != "electric" && pipeType != "sewage") return;
+
+        var adjacentPositions = GetAdjacentPositions(position);
+
+        string compatibleType = pipeType;
+        bool placeable = false;
+
+        if(startPoints[pipeType].Any(startPos => startPos[0] == position.x && startPos[1] == position.y && startPos[2] == position.z)) {
+            placeable = true;
+        }
 
         foreach (var pos in adjacentPositions)
         {
-            if (!Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) continue;
+            if (!Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) {
+                if(Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 }) && pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 })] == pipeType) {
+                    placeable = true;
+                    continue; 
+                }
+                continue;
+            };
+
+            Debug.Log("Exists");
+
 
             var existingPipe = pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })];
-            if (existingPipe == incompatibleType) return;
+            var adjHelper = GetAdjacentPositions(pos);
+
+            if(Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) {
+                if(pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })] == pipeType) {
+                    placeable = true;
+                }
+            }
+
+            foreach (var adj in adjHelper)
+            {
+                if(Exists(new int[] { adj.x, adj.y, PipeBuilder.currentLayer })) {
+                    if(pipes[GetPipeKey(new int[] { adj.x, adj.y, PipeBuilder.currentLayer })] == pipeType) {
+                        placeable = true;
+                    }
+                }
+            }
         }
+            if(!placeable) {
+                return;
+            };
 
-
-        Debug.Log(position.z);
         if(Exists(new int[] { position.x, position.y, position.z})) {
             if(pipes[GetPipeKey(new int[] { position.x, position.y, position.z})] != tiles[selectedPipe].name) {
                 return;
@@ -231,8 +278,9 @@ public class PipeHelper : MonoBehaviour
             var pipeType = tiles[selectedPipe];
             var ends = new List<int[]>();
             ends = GetRouteEndPositions(route);
+            foreach (var pos in route) {
 
-
+            }
             foreach (var pos in route)
             {
                 tilemap[PipeBuilder.currentLayer].CompressBounds();
@@ -261,9 +309,7 @@ public class PipeHelper : MonoBehaviour
                     if (Exists(adjacentPos) ||
                     pos[2] != PipeBuilder.currentLayer ||
                     tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null)
-                    {
                         continue;
-                    }
                     if (tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null ||
                     (PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(tilePosition).name == "VizA") ||
                     (buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) != null &&
@@ -302,12 +348,11 @@ public class PipeHelper : MonoBehaviour
             }
         }
 
-        
-
         if (tmpTilemap.GetTile(new Vector3Int(pos[0], pos[1], pos[2])) != null)
         {
             return true;
         }
+
 
         return false;
     }
@@ -605,6 +650,9 @@ public class PipeHelper : MonoBehaviour
         }
     }
 }
+
+
+
 
 //a ház -9 -4 0
 // hegy -3 1 0
