@@ -69,9 +69,9 @@ public class PipeHelper : MonoBehaviour
         talajTilemap = talajTilemapHelper;
         elements = elementsHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
-        startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
+        startPoints.Add("water", new List<int[]> { new int[] { -3, -5, 0 } });
         endPoints.Add("electric", new List<int[]> { new int[] { -3, 1, 0 } });
-        endPoints.Add("water", new List<int[]> { new int[] { 0, 1, 0 } });
+        endPoints.Add("water", new List<int[]> { new int[] { 0, 0, 0 } });
 
         if (utilities != null && utilities.Length > 0)
         {
@@ -139,19 +139,34 @@ public class PipeHelper : MonoBehaviour
 
     public static void Place(Vector3Int position)
     {
+        int selectedPipe = PipeBuilder.selectedPipe;
         if (!canBePlaced(new int[] { position.x, position.y, PipeBuilder.currentLayer }))
         {
-            Debug.Log($"Pipe cannot be placed at {position.x}, {position.y}, {PipeBuilder.currentLayer} {tempPipes.Count}");
-            foreach (var tempPipe in tempPipes)
-            {
-                foreach (var key in tempPipe.Keys)
-                {
-                    Debug.Log($"Temp pipe at {key[0]}, {key[1]}, {key[2]}");
-                }
-            }
             return;
         }
-        int selectedPipe = PipeBuilder.selectedPipe;
+
+        var pipeType = tiles[selectedPipe].name;
+        if (pipeType != "water" && pipeType != "electric") return;
+
+        var adjacentPositions = new List<Vector3Int>
+        {
+            position + Vector3Int.right,
+            position + Vector3Int.left,
+            position + Vector3Int.up,
+            position + Vector3Int.down
+        };
+
+        string incompatibleType = pipeType == "water" ? "electric" : "water";
+
+        foreach (var pos in adjacentPositions)
+        {
+            if (!Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) continue;
+
+            var existingPipe = pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })];
+            if (existingPipe == incompatibleType) return;
+        }
+
+
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
         PipeHelper.Test();

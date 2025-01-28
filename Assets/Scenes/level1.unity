@@ -25621,6 +25621,8 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: d4f7c1e1f890e114ca90060a96f235b3, type: 2}
   - name: Hegy
     tile: {fileID: 11400000, guid: 326c02ac1068b334893a4319cfd692f0, type: 2}
+  - name: Hal
+    tile: {fileID: 11400000, guid: d24f8d999ae16af4c8ecae9fd441d744, type: 2}
   talajTilemapHelper: {fileID: 202466053}
   elementsHelper:
   - name: buza
@@ -25657,6 +25659,12 @@ MonoBehaviour:
     position: {x: -4, y: 0}
   - name: hegy
     position: {x: -4, y: 0}
+  - name: hal
+    position: {x: 3, y: 0}
+  - name: hal
+    position: {x: 4, y: -2}
+  - name: hal
+    position: {x: 5, y: -4}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
