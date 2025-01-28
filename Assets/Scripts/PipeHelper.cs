@@ -112,7 +112,8 @@ public class PipeHelper : MonoBehaviour
             if (!electricNearby &&
             (currentTile == null ||
             currentTile == buzatiles[1] ||
-            currentTile == buzatiles[2]))
+            currentTile == buzatiles[2] ||
+            currentTile == utilities[2].tile))
             {
                 switch (element.name)
                 {
@@ -121,6 +122,9 @@ public class PipeHelper : MonoBehaviour
                         break;
                     case "hegy":
                         buzaTilemap.SetTile(tilePos, utilities[3].tile);
+                        break;
+                    case "hal":
+                        buzaTilemap.SetTile(tilePos, utilities[4].tile);
                         break;
                 }
             }
@@ -234,7 +238,7 @@ public class PipeHelper : MonoBehaviour
                 if (tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null ||
                 (PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(tilePosition).name == "VizA") ||
                 (buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) != null &&
-                buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)).name == "pendroid_assets_326" && PipeBuilder.currentLayer == 0))
+                buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) == utilities[3].tile && PipeBuilder.currentLayer == 0))
                     continue;
                 tmpTilemap.SetTile(new Vector3Int(tilePosition[0], tilePosition[1], PipeBuilder.currentLayer), tmpTiles[0]);
                 AddTemp(new int[] { tilePosition[0], tilePosition[1], PipeBuilder.currentLayer }, "temp");
@@ -316,7 +320,8 @@ public class PipeHelper : MonoBehaviour
             }
         }
 
-        if (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "VizA" || (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "Bridge" && key[2] == 1))
+        if (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "VizA" ||
+        (talajTilemap.GetTile(new Vector3Int(key[0], key[1], 0)).name == "Bridge" && key[2] == 1))
             SorroundGetHal(key);
     }
 
@@ -335,7 +340,7 @@ public class PipeHelper : MonoBehaviour
                 var surroundPos = new Vector3Int(key[0] + x, key[1] + y, 0);
                 var surroundTile = buzaTilemap.GetTile(surroundPos);
 
-                if (surroundTile != null && surroundTile.name == "pendroid_assets_207")
+                if (surroundTile != null && surroundTile == utilities[4].tile)
                 {
                     buzaTilemap.SetTile(surroundPos, utilities[2].tile);
                 }
