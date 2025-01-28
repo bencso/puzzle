@@ -7,8 +7,8 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField]
     private float moveSpeed = 2.0f;
-    private Vector2 touchStart; 
-    private bool isDragging = false; 
+    private Vector2 touchStart;
+    private bool isDragging = false;
     public GameObject UIManager;
     public GameObject Background;
     public GameObject menu;
@@ -24,7 +24,33 @@ public class CameraMovement : MonoBehaviour
         mainCamera = GetComponent<Camera>();
         menu.SetActive(false);
         CalculateBounds();
+        // AdjustCamera();
     }
+
+    // private float minZoom = 2f;
+    // private float maxZoom = 8f;
+    // private float currentZoom;
+
+    // void AdjustCamera()
+    // {
+    //     if (backgroundTilemap == null || mainCamera == null) return;
+
+    //     float screenRatio = (float)Screen.width / Screen.height;
+    //     bool isTablet = screenRatio < 1.6f;
+
+    //     if (isTablet)
+    //     {
+    //         BoundsInt bounds = backgroundTilemap.cellBounds;
+    //         Vector3 tilemapSize = backgroundTilemap.CellToWorld(new Vector3Int(bounds.xMax, bounds.yMax, 0)) -
+    //             backgroundTilemap.CellToWorld(new Vector3Int(bounds.xMin, bounds.yMin, 0));
+    //         float tilemapRatio = tilemapSize.x / tilemapSize.y;
+    //         float zoomByHeight = tilemapSize.y / 2;
+    //         float zoomByWidth = (tilemapSize.x / screenRatio) / 2;
+    //         currentZoom = Mathf.Max(zoomByHeight, zoomByWidth);
+    //         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+    //         mainCamera.orthographicSize = currentZoom;
+    //     }
+    // }
 
     void CalculateBounds()
     {

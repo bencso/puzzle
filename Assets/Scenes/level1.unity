@@ -22838,7 +22838,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 422741715}
-  m_Father: {fileID: 1755578164}
+  m_Father: {fileID: 1836467772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -25015,6 +25015,7 @@ GameObject:
   - component: {fileID: 1755578164}
   - component: {fileID: 1755578166}
   - component: {fileID: 1755578165}
+  - component: {fileID: 1755578167}
   m_Layer: 5
   m_Name: UITilemap
   m_TagString: Untagged
@@ -25022,22 +25023,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1755578164
-Transform:
+--- !u!224 &1755578164
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755578163}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 518812204}
+  m_Children: []
   m_Father: {fileID: 1836467772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!483693784 &1755578165
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -25308,6 +25312,14 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!222 &1755578167
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755578163}
+  m_CullTransparentMesh: 1
 --- !u!1 &1771632080
 GameObject:
   m_ObjectHideFlags: 0
@@ -25512,6 +25524,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 518812204}
   - {fileID: 1755578164}
   - {fileID: 1145792472}
   m_Father: {fileID: 0}
