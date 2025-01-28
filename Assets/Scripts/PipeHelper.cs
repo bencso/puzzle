@@ -154,6 +154,8 @@ public class PipeHelper : MonoBehaviour
 
     public static List<Vector3Int> GetAdjacentPositions(Vector3Int position)
     {
+        Debug.Log($"pos: {position.x}, {position.y}, {PipeBuilder.currentLayer}");
+        position.z = PipeBuilder.currentLayer;
         return new List<Vector3Int>
         {
             position + Vector3Int.right,
@@ -161,6 +163,23 @@ public class PipeHelper : MonoBehaviour
             position + Vector3Int.up,
             position + Vector3Int.down
         };
+    }
+
+    private static bool IsRouteEndpoint(Vector3Int position, string pipeType)
+    {
+        Debug.Log($"pos: {position.x}, {position.y}, {PipeBuilder.currentLayer}");
+        foreach (var route in routes) {
+            Debug.Log($"route: {route.Count}");
+            var ends = GetRouteEndPositions(route);
+            Debug.Log($"ends: {ends.Count}");
+            foreach (var end in ends) {
+                Debug.Log($"end: {end[0]}, {end[1]}, {end[2]} \n {position.x}, {position.y}, {PipeBuilder.currentLayer}");
+            }
+            if(ends.Any(end => end[0] == position.x && end[1] == position.y && end[2] == (PipeBuilder.currentLayer == 0 ? 1 : 0))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void Place(Vector3Int position)
@@ -182,18 +201,29 @@ public class PipeHelper : MonoBehaviour
 
         if(startPoints[pipeType].Any(startPos => startPos[0] == position.x && startPos[1] == position.y && startPos[2] == position.z)) {
             placeable = true;
+            Debug.Log("1. true");
         }
+
 
         foreach (var pos in adjacentPositions)
         {
+            Debug.Log($"{position.x}, {position.y}, {PipeBuilder.currentLayer} \n pos: {pos.x}, {pos.y}, {PipeBuilder.currentLayer}");
             if (!Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) {
-                if(Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 }) && pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 })] == pipeType) {
-                    placeable = true;
-                    continue; 
+                if(Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 }) && pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer == 0 ? 1 : 0 })] == pipeType ) {
+{
+                        Debug.Log("69-");
+                        if(IsRouteEndpoint(new Vector3Int(position.x, position.y, PipeBuilder.currentLayer), pipeType)) {
+
+                            placeable = true;
+                            Debug.Log("2. true");
+                            break;
+                        }
+}
                 }
+                Debug.Log("skipping");                
                 continue;
             };
-
+            Debug.Log(pipeType);
             Debug.Log("Exists");
 
 
@@ -201,29 +231,35 @@ public class PipeHelper : MonoBehaviour
             var adjHelper = GetAdjacentPositions(pos);
 
             if(Exists(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })) {
+                Debug.Log($"1.1  \n {pos.x}, {pos.y}, {PipeBuilder.currentLayer} \n {pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })]} \n {pipeType} \n {pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })] == pipeType}");
                 if(pipes[GetPipeKey(new int[] { pos.x, pos.y, PipeBuilder.currentLayer })] == pipeType) {
                     placeable = true;
+                    Debug.Log("3. true");
+                    break;
                 }
             }
 
             foreach (var adj in adjHelper)
             {
                 if(Exists(new int[] { adj.x, adj.y, PipeBuilder.currentLayer })) {
+                    Debug.Log("2.1");
                     if(pipes[GetPipeKey(new int[] { adj.x, adj.y, PipeBuilder.currentLayer })] == pipeType) {
                         placeable = true;
+                        Debug.Log("4. true");
+                        break;
                     }
                 }
+            }
+        }
+
+        if(Exists(new int[] { position.x, position.y, PipeBuilder.currentLayer})) {
+            if(pipes[GetPipeKey(new int[] { position.x, position.y, PipeBuilder.currentLayer})] != tiles[selectedPipe].name) {
+                return;
             }
         }
             if(!placeable) {
                 return;
             };
-
-        if(Exists(new int[] { position.x, position.y, position.z})) {
-            if(pipes[GetPipeKey(new int[] { position.x, position.y, position.z})] != tiles[selectedPipe].name) {
-                return;
-            }
-        }
 
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
