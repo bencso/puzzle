@@ -85,7 +85,7 @@ public class PipeHelper : MonoBehaviour
     private static List<List<int[]>> routes = new List<List<int[]>>();
 
     public static string tempTileType = null;
-
+    public static bool wheataffected = false;
     void Start()
     {
         initHelper();
@@ -124,6 +124,10 @@ public class PipeHelper : MonoBehaviour
     }
 
     public static void initMap(){
+
+        wheataffected = false;
+        PipeBuilder.currentLayer = 0;
+        PipeBuilder.selectedPipe = 0;
 
         if (utilities != null && utilities.Length > 0)
         {
@@ -481,11 +485,13 @@ public class PipeHelper : MonoBehaviour
                 if (key[2] == 0)
                 {
                     buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
+                    wheataffected = true;
                     SorroundPlaceBuza(key);
                 }
                 if (key[2] == 1)
                 {
                     buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
+                    wheataffected = true;
                     SorroundPlaceBuza(key);
                 }
             }
@@ -530,6 +536,7 @@ public class PipeHelper : MonoBehaviour
                 if (surroundTile != null && surroundTile == buzatiles[0])
                 {
                     buzaTilemap.SetTile(surroundPos, buzatiles[1]);
+                    wheataffected = false;
                 }
             }
         }
@@ -572,11 +579,12 @@ public class PipeHelper : MonoBehaviour
 
         }
 
-                    if (!isLevelNotCompleted)
+        if (!isLevelNotCompleted && !wheataffected)
             {
                 Debug.Log($"Level completed");
                 reset();
-                SceneManager.LoadScene("EndScreen");
+                    LevelHelper.setMaxLevel();
+                    SceneManager.LoadScene("EndScreen");
             }
             else
             {
