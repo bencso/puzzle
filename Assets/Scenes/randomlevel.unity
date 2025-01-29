@@ -25514,6 +25514,7 @@ GameObject:
   - component: {fileID: 1836467775}
   - component: {fileID: 1836467774}
   - component: {fileID: 1836467776}
+  - component: {fileID: 1836467778}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -25662,47 +25663,7 @@ MonoBehaviour:
   - name: Kivezeto
     tile: {fileID: 11400000, guid: 65ced30402f8318409f6a8c10c8a9157, type: 2}
   talajTilemapHelper: {fileID: 202466053}
-  elementsHelper:
-  - name: buza
-    position: {x: 11, y: -1}
-  - name: buza
-    position: {x: 12, y: -1}
-  - name: buza
-    position: {x: 13, y: -1}
-  - name: buza
-    position: {x: 14, y: -1}
-  - name: buza
-    position: {x: 15, y: -1}
-  - name: buza
-    position: {x: 12, y: -2}
-  - name: buza
-    position: {x: 13, y: -2}
-  - name: buza
-    position: {x: 14, y: -2}
-  - name: buza
-    position: {x: 15, y: -2}
-  - name: buza
-    position: {x: 15, y: -2}
-  - name: buza
-    position: {x: 14, y: -3}
-  - name: buza
-    position: {x: 13, y: -3}
-  - name: hegy
-    position: {x: -3, y: 1}
-  - name: hegy
-    position: {x: -2, y: 1}
-  - name: hegy
-    position: {x: -1, y: 1}
-  - name: hegy
-    position: {x: -4, y: 0}
-  - name: hegy
-    position: {x: -4, y: 0}
-  - name: hal
-    position: {x: 3, y: 0}
-  - name: hal
-    position: {x: 4, y: -2}
-  - name: hal
-    position: {x: 5, y: -4}
+  elementsHelper: []
   startTilesHelper:
   - name: sewage
     tile: {fileID: 11400000, guid: 65ced30402f8318409f6a8c10c8a9157, type: 2}
@@ -25710,36 +25671,24 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 4afcb7b495a1eca49af1174afda81226, type: 2}
   - name: electric
     tile: {fileID: 11400000, guid: 4e5be123f7d33f64291dc43e5043b78e, type: 2}
-  startPointsHelper:
-  - name: electric
-    x: -9
-    y: -4
-    z: 0
-  - name: water
-    x: 0
-    y: -3
-    z: 0
-  - name: sewage
-    x: -10
-    y: -6
-    z: 0
-  endPointsHelper:
-  - name: electric
-    x: -3
-    y: 1
-    z: 0
-  - name: electric
-    x: -3
-    y: -1
-    z: 0
-  - name: water
-    x: 0
-    y: 1
-    z: 0
-  - name: sewage
-    x: -10
-    y: -4
-    z: 0
+  startPointsHelper: []
+  endPointsHelper: []
+--- !u!114 &1836467778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836467770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd6a6b1a66f90343bae6067f1e399f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  talajTilemap: {fileID: 202466053}
+  waterTile: {fileID: 11400000, guid: 834bc547a866c4845bd50ff3351f0de0, type: 2}
+  islandTile: {fileID: 11400000, guid: 6f218062cfa7fa143ada4bfb80b05023, type: 2}
+  bridgeTile: {fileID: 11400000, guid: d0a5895b23bfcf24b954f6e45b3fe086, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
