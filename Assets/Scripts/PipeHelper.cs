@@ -18,6 +18,13 @@ public class Element
     public Vector2Int position;
 }
 
+[System.Serializable]
+public class StartTiles{
+    public string name;
+    public Tile tile;
+}
+
+
 public class PipeHelper : MonoBehaviour
 {
     [SerializeField]
@@ -38,9 +45,12 @@ public class PipeHelper : MonoBehaviour
     private Tilemap talajTilemapHelper;
     [SerializeField]
     private Element[] elementsHelper;
+    [SerializeField]
+    private StartTiles[] startTilesHelper;
     public static Element[] elements;
     public static Tile[] buzatiles;
     public static Tilemap buzaTilemap;
+    public static StartTiles[] startTiles;
     public static Tilemap tmpTilemap;
     public static RuleTile[] tmpTiles;
     public static Tilemap[] tilemap;
@@ -70,6 +80,7 @@ public class PipeHelper : MonoBehaviour
         utilities = utilitiesHelper;
         talajTilemap = talajTilemapHelper;
         elements = elementsHelper;
+        startTiles = startTilesHelper;
         startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
         startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
         startPoints.Add("sewage", new List<int[]> { new int[] { -10, -6, 0 } });
@@ -97,10 +108,10 @@ public class PipeHelper : MonoBehaviour
             {
                 foreach (var pos in startpoint.Value)
                 {
-                    if(startpoint.Key == "sewage") {
-                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[5].tile);
-                    } else {
-                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), utilities[1].tile);
+                    var matchingTile = startTiles.FirstOrDefault(t => t.name == startpoint.Key);
+                    if (matchingTile != null)
+                    {
+                        buzaTilemap.SetTile(new Vector3Int(pos[0], pos[1], pos[2]), matchingTile.tile);
                     }
                 }
             }
