@@ -24,6 +24,15 @@ public class StartTiles{
     public Tile tile;
 }
 
+[System.Serializable]
+public class positionHelper{
+
+    public string name;
+    public int x;
+    public int y;
+    public int z;
+}
+
 
 public class PipeHelper : MonoBehaviour
 {
@@ -62,8 +71,11 @@ public class PipeHelper : MonoBehaviour
 
     protected static int selectedPipe = 0;
 
-    private static Dictionary<string, List<int[]>> startPoints = new Dictionary<string, List<int[]>>();
-    private static Dictionary<string, List<int[]>> endPoints = new Dictionary<string, List<int[]>>();
+    public List<positionHelper> startPointsHelper = new List<positionHelper>();
+    public List<positionHelper> endPointsHelper = new List<positionHelper>();
+
+    public static Dictionary<string, List<int[]>> startPoints = new Dictionary<string, List<int[]>>();
+    public static Dictionary<string, List<int[]>> endPoints = new Dictionary<string, List<int[]>>();
 
     private static List<List<int[]>> routes = new List<List<int[]>>();
 
@@ -71,6 +83,11 @@ public class PipeHelper : MonoBehaviour
 
     void Start()
     {
+        initHelper();
+        initMap();
+    }
+
+    public void initHelper(){
         tilemap = tilemapHelper;
         tiles = tilesHelper;
         tmpTiles = tmpTilesHelper;
@@ -81,15 +98,33 @@ public class PipeHelper : MonoBehaviour
         talajTilemap = talajTilemapHelper;
         elements = elementsHelper;
         startTiles = startTilesHelper;
-        startPoints.Add("electric", new List<int[]> { new int[] { -9, -4, 0 } });
-        startPoints.Add("water", new List<int[]> { new int[] { 0, -3, 0 } });
-        startPoints.Add("sewage", new List<int[]> { new int[] { -10, -6, 0 } });
-        endPoints.Add("electric", new List<int[]>());
-        endPoints["electric"].Add(new int[] { -3, 1, 0 });
-        endPoints["electric"].Add(new int[] { -3, -1, 0 });
 
-        endPoints.Add("water", new List<int[]> { new int[] { 0, 1, 0 } });
-        endPoints.Add("sewage", new List<int[]> { new int[] { -10, -4, 0 } });
+        startPoints.Add("electric", new List<int[]>());
+        startPoints.Add("water", new List<int[]>());
+        startPoints.Add("sewage", new List<int[]>());
+
+        endPoints.Add("electric", new List<int[]>());
+        endPoints.Add("water", new List<int[]>());
+        endPoints.Add("sewage", new List<int[]>());
+
+        foreach (var startPoint in startPointsHelper)
+        {
+            startPoints[startPoint.name].Add(new int[] { startPoint.x, startPoint.y, startPoint.z });
+        }
+
+        foreach (var endPoint in endPointsHelper)
+        {
+            endPoints[endPoint.name].Add(new int[] { endPoint.x, endPoint.y, endPoint.z });
+        }
+
+        endPointsHelper.Clear();
+        startPointsHelper.Clear();
+    }
+
+    public static void initMap(){
+
+
+        // Initialize with empty arrays of size 3 (for x, y, z coordinates)
 
         if (utilities != null && utilities.Length > 0)
         {
