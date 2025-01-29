@@ -212,8 +212,19 @@ public class RandomGenerator : MonoBehaviour
         var sewageStart = validSewageStarts[Random.Range(0, validSewageStarts.Count)];
         PipeHelper.startPoints["sewage"] = new List<int[]> { new int[] { sewageStart.x, sewageStart.y, 0 } };
         
-        var sewageEnd = GetRandomInlandTile();
-        PipeHelper.endPoints["sewage"] = new List<int[]> { new int[] { sewageEnd.x, sewageEnd.y, 0 } };
+        var validSewageEnds = coastTiles
+            .Where(pos => Vector2Int.Distance(pos, waterStart) > 5) // Keep some distance from water start
+            .ToList();
+        if (validSewageEnds.Count > 0)
+        {
+            var sewageEnd = validSewageEnds[Random.Range(0, validSewageEnds.Count)];
+            PipeHelper.endPoints["sewage"] = new List<int[]> { new int[] { sewageEnd.x, sewageEnd.y, 0 } };
+        }
+        else
+        {
+            var sewageEnd = coastTiles[Random.Range(0, coastTiles.Count)];
+            PipeHelper.endPoints["sewage"] = new List<int[]> { new int[] { sewageEnd.x, sewageEnd.y, 0 } };
+        }
     }
 
     private void GenerateElements()
