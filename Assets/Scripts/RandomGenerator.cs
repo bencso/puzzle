@@ -6,17 +6,16 @@ using System.Linq;
 public class RandomGenerator : MonoBehaviour
 {
     [SerializeField] private Tilemap talajTilemap;
-    [SerializeField] private AnimatedTile waterTile;    // VizA animated water tile
-    [SerializeField] private RuleTile islandTile;       // Regular land tile
-    [SerializeField] private RuleTile bridgeTile;       // Bridge tile
+    [SerializeField] private AnimatedTile waterTile;    
+    [SerializeField] private RuleTile islandTile;       
+    [SerializeField] private RuleTile bridgeTile;       
     
     private int mapWidth;
     private int mapHeight;
     private List<Vector2Int> landTiles = new List<Vector2Int>();
     private List<Vector2Int> waterTiles = new List<Vector2Int>();
-    private List<Vector2Int> coastTiles = new List<Vector2Int>(); // Water tiles next to land
+    private List<Vector2Int> coastTiles = new List<Vector2Int>(); 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GenerateMap();
@@ -28,7 +27,6 @@ public class RandomGenerator : MonoBehaviour
         InitializeMapSize();
         GenerateBaseTerrain();
         GenerateIslands();
-        ConnectIslandsWithBridges();
         GenerateStartAndEndPoints();
         GenerateElements();
         PipeHelper.initMap();
@@ -37,13 +35,12 @@ public class RandomGenerator : MonoBehaviour
 
     private void InitializeMapSize()
     {
-        mapWidth = Random.Range(33, 33);
-        mapHeight = Random.Range(33, 33);
+        mapWidth = 30;
+        mapHeight = 30;
     }
 
     private void GenerateBaseTerrain()
     {
-        // Fill entire map with animated water
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -53,32 +50,71 @@ public class RandomGenerator : MonoBehaviour
                 waterTiles.Add(new Vector2Int(x - mapWidth/2, y - mapHeight/2));
             }
         }
-        // Force RuleTile update
         talajTilemap.RefreshAllTiles();
     }
 
     private void GenerateIslands()
     {
-        int numIslands = Random.Range(1, 4);
-        for (int i = 0; i < numIslands; i++)
+        int numIslands = Random.Range(1, 3); 
+        float centerSpread = mapWidth / 6;
+
+
+        Vector2Int mainCenter = Vector2Int.zero;
+        int mainRadius = Random.Range(6, 10); 
+        GenerateIsland(mainCenter, mainRadius);
+
+        for (int i = 1; i < numIslands; i++)
         {
-            Vector2Int center = new Vector2Int(
-                Random.Range(-mapWidth/2 + 3, mapWidth/2 - 3),
-                Random.Range(-mapHeight/2 + 3, mapHeight/2 - 3)
-            );
+            float angle = Random.Range(0f, 2f * Mathf.PI);
+            float distance = Random.Range(mainRadius * 0.5f, centerSpread);
             
-            GenerateIsland(center, Random.Range(4, 8));
+            Vector2Int center = new Vector2Int(
+                Mathf.RoundToInt(distance * Mathf.Cos(angle)),
+                Mathf.RoundToInt(distance * Mathf.Sin(angle))
+            );
+
+            center.x = Mathf.Clamp(center.x, -mapWidth/4, mapWidth/4);
+            center.y = Mathf.Clamp(center.y, -mapHeight/4, mapHeight/4);
+            
+            int radius = Mathf.RoundToInt(Random.Range(4, 6));
+            GenerateIsland(center, radius);
+
+            var path = FindPath(mainCenter, center);
+            foreach (var pos in path)
+            {
+                Vector3Int tilePos = new Vector3Int(pos.x, pos.y, 0);
+                if (!landTiles.Contains(pos))
+                {
+                    talajTilemap.SetTile(tilePos, islandTile);
+                    landTiles.Add(pos);
+                    waterTiles.Remove(pos);
+                }
+            }
         }
+        
         UpdateCoastTiles();
     }
 
     private void GenerateIsland(Vector2Int center, int radius)
     {
+        // Add some randomness to island shape
+        float[] angleDistortion = new float[8];
+        for (int i = 0; i < 8; i++)
+        {
+            angleDistortion[i] = Random.Range(0.8f, 1.2f);
+        }
+
         for (int x = -radius; x <= radius; x++)
         {
             for (int y = -radius; y <= radius; y++)
             {
-                if (x*x + y*y <= radius*radius + Random.Range(-2, 3))
+                float angle = Mathf.Atan2(y, x);
+                if (angle < 0) angle += 2 * Mathf.PI;
+                
+                int segment = Mathf.FloorToInt((angle / (2 * Mathf.PI)) * 8);
+                float distortedRadius = radius * angleDistortion[segment];
+
+                if (x*x + y*y <= distortedRadius * distortedRadius + Random.Range(-2, 3))
                 {
                     Vector2Int pos = center + new Vector2Int(x, y);
                     if (IsInBounds(pos))
@@ -91,7 +127,6 @@ public class RandomGenerator : MonoBehaviour
                 }
             }
         }
-        // Force RuleTile update after island generation
         talajTilemap.RefreshAllTiles();
     }
 
@@ -105,76 +140,6 @@ public class RandomGenerator : MonoBehaviour
                 coastTiles.Add(waterTile);
             }
         }
-    }
-
-    private void ConnectIslandsWithBridges()
-    {
-        var islands = FindIslands();
-        for (int i = 1; i < islands.Count; i++)
-        {
-            ConnectIslands(islands[i-1], islands[i]);
-        }
-    }
-
-    private List<List<Vector2Int>> FindIslands()
-    {
-        List<List<Vector2Int>> islands = new List<List<Vector2Int>>();
-        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
-
-        foreach (var tile in landTiles)
-        {
-            if (!visited.Contains(tile))
-            {
-                var island = FloodFill(tile, visited);
-                islands.Add(island);
-            }
-        }
-
-        return islands;
-    }
-
-    private List<Vector2Int> FloodFill(Vector2Int start, HashSet<Vector2Int> visited)
-    {
-        var island = new List<Vector2Int>();
-        var queue = new Queue<Vector2Int>();
-        queue.Enqueue(start);
-
-        while (queue.Count > 0)
-        {
-            var pos = queue.Dequeue();
-            if (!visited.Contains(pos) && landTiles.Contains(pos))
-            {
-                visited.Add(pos);
-                island.Add(pos);
-
-                foreach (var adj in GetAdjacentPositions(pos))
-                {
-                    queue.Enqueue(adj);
-                }
-            }
-        }
-
-        return island;
-    }
-
-    private void ConnectIslands(List<Vector2Int> island1, List<Vector2Int> island2)
-    {
-        var start = island1.OrderBy(p => island2.Min(p2 => Vector2Int.Distance(p, p2))).First();
-        var end = island2.OrderBy(p => Vector2Int.Distance(p, start)).First();
-
-        var path = FindPath(start, end);
-        foreach (var pos in path)
-        {
-            if (!landTiles.Contains(pos))
-            {
-                Vector3Int tilePos = new Vector3Int(pos.x, pos.y, 0);
-                talajTilemap.SetTile(tilePos, bridgeTile);
-                landTiles.Add(pos);
-                waterTiles.Remove(pos);
-            }
-        }
-        // Force RuleTile update after bridge placement
-        talajTilemap.RefreshAllTiles();
     }
 
     private List<Vector2Int> FindPath(Vector2Int start, Vector2Int end)
@@ -195,41 +160,59 @@ public class RandomGenerator : MonoBehaviour
         return path;
     }
 
+    private bool IsCoastTile(Vector2Int pos)
+    {
+        if (landTiles.Contains(pos))
+        {
+            return GetAdjacentPositions(pos).Any(adj => waterTiles.Contains(adj));
+        }
+        return false;
+    }
+
+    private Vector2Int GetRandomInlandTile()
+    {
+        Vector2Int pos;
+        do
+        {
+            pos = landTiles[Random.Range(0, landTiles.Count)];
+        } while (IsCoastTile(pos));
+        return pos;
+    }
+
     private void GenerateStartAndEndPoints()
     {
-        // Clear existing points
         PipeHelper.startPoints.Clear();
         PipeHelper.endPoints.Clear();
 
-        // Generate Electric start point (on land)
-        var electricStart = landTiles[Random.Range(0, landTiles.Count)];
+        var electricStart = GetRandomInlandTile();
         PipeHelper.startPoints["electric"] = new List<int[]> { new int[] { electricStart.x, electricStart.y, 0 } };
 
-        // Generate Electric end points (1-5 random points on land)
         int numEndPoints = Random.Range(1, 6);
-        PipeHelper.endPoints["electric"] = new List<int[]>();
         List<int[]> endPoints = new List<int[]>();
         for (int i = 0; i < numEndPoints; i++)
         {
-            var endPoint = landTiles[Random.Range(0, landTiles.Count)];
+            var endPoint = GetRandomInlandTile();
             endPoints.Add(new int[] { endPoint.x, endPoint.y, 0 });
         }
         PipeHelper.endPoints["electric"] = endPoints;
 
-        // Generate Water start point (in water next to land)
         var waterStart = coastTiles[Random.Range(0, coastTiles.Count)];
         PipeHelper.startPoints["water"] = new List<int[]> { new int[] { waterStart.x, waterStart.y, 0 } };
         
-        // Generate Water end point
-        var waterEnd = landTiles[Random.Range(0, landTiles.Count)];
+        var validWaterEnds = GetAdjacentPositions(electricStart)
+            .Where(pos => landTiles.Contains(pos) && !IsCoastTile(pos))
+            .ToList();
+        var waterEnd = validWaterEnds[Random.Range(0, validWaterEnds.Count)];
         PipeHelper.endPoints["water"] = new List<int[]> { new int[] { waterEnd.x, waterEnd.y, 0 } };
 
-        // Generate Sewage start point (next to electric start)
-        var sewageStart = GetAdjacentPositions(electricStart).First(pos => landTiles.Contains(pos));
+        var validSewageStarts = GetAdjacentPositions(electricStart)
+            .Where(pos => landTiles.Contains(pos) && !IsCoastTile(pos) && 
+                   pos != waterEnd) 
+            .ToList();
+        var sewageStart = validSewageStarts[Random.Range(0, validSewageStarts.Count)];
         PipeHelper.startPoints["sewage"] = new List<int[]> { new int[] { sewageStart.x, sewageStart.y, 0 } };
         
-        // Generate Sewage end point
-        var sewageEnd = landTiles[Random.Range(0, landTiles.Count)];
+        var sewageEnd = GetRandomInlandTile();
         PipeHelper.endPoints["sewage"] = new List<int[]> { new int[] { sewageEnd.x, sewageEnd.y, 0 } };
     }
 
@@ -237,30 +220,46 @@ public class RandomGenerator : MonoBehaviour
     {
         var elements = new List<Element>();
 
-        // Generate wheat (on land, away from electric points)
-        int numWheat = Random.Range(5, 11);
-        for (int i = 0; i < numWheat; i++)
+        int numWheatGroups = Random.Range(2, 4); 
+        for (int g = 0; g < numWheatGroups; g++)
         {
-            var pos = landTiles[Random.Range(0, landTiles.Count)];
-            if (!IsNearElectric(pos))
+            var centerPos = GetRandomInlandTile();
+            if (!IsNearElectric(centerPos))
             {
-                elements.Add(new Element { name = "buza", position = pos });
+                int wheatInGroup = Random.Range(3, 6);
+                elements.Add(new Element { name = "buza", position = centerPos });
+
+                for (int i = 0; i < wheatInGroup - 1; i++)
+                {
+                    var adjacentPositions = GetGroupAdjacentPositions(centerPos, 2);
+                    var validPositions = adjacentPositions
+                        .Where(pos => landTiles.Contains(pos) 
+                               && !IsCoastTile(pos) 
+                               && !IsNearElectric(pos)
+                               && !elements.Any(e => e.position.x == pos.x && e.position.y == pos.y))
+                        .ToList();
+
+                    if (validPositions.Count > 0)
+                    {
+                        var wheatPos = validPositions[Random.Range(0, validPositions.Count)];
+                        elements.Add(new Element { name = "buza", position = wheatPos });
+                    }
+                }
             }
         }
 
-        // Generate fish (in water)
         int numFish = Random.Range(3, 7);
+        var deepWaterTiles = waterTiles.Except(coastTiles).ToList();
         for (int i = 0; i < numFish; i++)
         {
-            var pos = waterTiles[Random.Range(0, waterTiles.Count)];
+            var pos = deepWaterTiles[Random.Range(0, deepWaterTiles.Count)];
             elements.Add(new Element { name = "hal", position = pos });
         }
 
-        // Generate mountains (on land)
-        int numMountains = Random.Range(2, 5);
+        int numMountains = Random.Range(4, 11);
         for (int i = 0; i < numMountains; i++)
         {
-            var pos = landTiles[Random.Range(0, landTiles.Count)];
+            var pos = GetRandomInlandTile();
             elements.Add(new Element { name = "hegy", position = pos });
         }
 
@@ -292,8 +291,6 @@ public class RandomGenerator : MonoBehaviour
         return pos.x >= -mapWidth/2 && pos.x < mapWidth/2 &&
                pos.y >= -mapHeight/2 && pos.y < mapHeight/2;
     }
-
-    // check if we got an empty tile on the talaj tilemap we have a tile which is null and if so, place a water tile on it
     private void checkEmptyTile()
     {
         BoundsInt bounds = new BoundsInt(-mapWidth/2, -mapHeight/2, 0, mapWidth, mapHeight, 1);
@@ -310,6 +307,24 @@ public class RandomGenerator : MonoBehaviour
             }
         }
         talajTilemap.RefreshAllTiles();
+    }
+
+    private List<Vector2Int> GetGroupAdjacentPositions(Vector2Int center, int radius)
+    {
+        var positions = new List<Vector2Int>();
+        for (int x = -radius; x <= radius; x++)
+        {
+            for (int y = -radius; y <= radius; y++)
+            {
+                if (x == 0 && y == 0) continue;
+                var pos = new Vector2Int(center.x + x, center.y + y);
+                if (IsInBounds(pos))
+                {
+                    positions.Add(pos);
+                }
+            }
+        }
+        return positions;
     }
 
     // Update is called once per frame

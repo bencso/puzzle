@@ -14,8 +14,8 @@ public class Menu : MonoBehaviour
       SceneManager.LoadScene("menu");
    }
 
-   public void QuitGame()
+   public void GoToRandomLevel()
    {
-      Application.Quit();
+      SceneManager.LoadScene("randomLevel");
    }
 }
