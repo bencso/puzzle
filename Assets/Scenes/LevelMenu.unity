@@ -193,8 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ebcb52715beff4fbfb5583e2354d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  font: {fileID: 12800000, guid: 7f824bc0ed82ed249bd65f2828845232, type: 3}
-  levelCount: 3
+  font: {fileID: 12800000, guid: dd023880914a049438b2178d4f456bb4, type: 3}
 --- !u!1 &511313828
 GameObject:
   m_ObjectHideFlags: 0
