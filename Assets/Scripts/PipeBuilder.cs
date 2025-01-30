@@ -39,7 +39,13 @@ public class PipeBuilder : MonoBehaviour
                 selectionTile = (Tile)tileSelection.GetTile(pos);
                 if (selectionTile != null)
                 {
-                    tileSelection.SetTile(pos, tiles[0]);
+                    var ruleTile = tiles[0];
+                    if (ruleTile != null)
+                    {
+                        var tempTile = ScriptableObject.CreateInstance<Tile>();
+                        tempTile.sprite = ruleTile.m_DefaultSprite;
+                        tileSelection.SetTile(pos, tempTile);
+                    }
                 }
             }
             BoundsInt boundsNyil = selectNyil.cellBounds;
