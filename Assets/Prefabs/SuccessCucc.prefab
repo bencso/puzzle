@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876416441612308219}
   m_Layer: 5
-  m_Name: Targy (2)
+  m_Name: sewage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 790353549947833901}
   m_Layer: 5
-  m_Name: Targy (3)
+  m_Name: water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -937,7 +937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8387954339834642935}
   m_Layer: 5
-  m_Name: Targy
+  m_Name: house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -974,7 +974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8064759260158365723}
   m_Layer: 5
-  m_Name: Targy (1)
+  m_Name: factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
