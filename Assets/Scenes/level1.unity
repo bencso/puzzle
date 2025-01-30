@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 128.16992, y: 96.370026}
+  m_AnchoredPosition: {x: 128.16992, y: 96.369995}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &103578814
@@ -23221,7 +23221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &516760178
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23754,7 +23754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &706798511
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24412,7 +24412,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -24465,14 +24465,14 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 2
     m_Data: {fileID: -1043282575, guid: 115fe34c653079449bf8e27e84c31737, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -726390936, guid: 115fe34c653079449bf8e27e84c31737, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -1829290810, guid: 115fe34c653079449bf8e27e84c31737, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1648699927, guid: 115fe34c653079449bf8e27e84c31737, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -726390936, guid: 115fe34c653079449bf8e27e84c31737, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -938438646509244980, guid: 87225fd213ec7400c89093c3b7f0255e, type: 3}
   m_TileMatrixArray:
@@ -24635,7 +24635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 128.16992, y: 196.12003}
+  m_AnchoredPosition: {x: 128.16992, y: 196.12}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1046273860
@@ -25882,7 +25882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1506292913
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26178,7 +26178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1730908568
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26882,6 +26882,7 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: d24f8d999ae16af4c8ecae9fd441d744, type: 2}
   - name: Kivezeto
     tile: {fileID: 11400000, guid: 65ced30402f8318409f6a8c10c8a9157, type: 2}
+  completedTilesHelper: []
   talajTilemapHelper: {fileID: 202466053}
   elementsHelper:
   - name: buza
@@ -26968,6 +26969,14 @@ MonoBehaviour:
     x: -10
     y: -4
     z: 0
+  vizXHelper: {fileID: 706798510}
+  vizPHelper: {fileID: 516760177}
+  aramXHelper: {fileID: 1506292912}
+  aramPHelper: {fileID: 1730908567}
+  sewageXHelper: {fileID: 640268285}
+  sewagePHelper: {fileID: 498412934}
+  houseXHelper: {fileID: 1046273860}
+  housePHelper: {fileID: 235281261}
 --- !u!224 &2059589909 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1235783565405650158, guid: 6bb169b2ab34b477ead0a81bd6bff0ba, type: 3}
@@ -27097,6 +27106,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1755578163}
+    - target: {fileID: 9032013444624342228, guid: 96f7d251954674adc85ff51b8b5c2002, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 108
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27187,7 +27200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1235783565405650158, guid: 6bb169b2ab34b477ead0a81bd6bff0ba, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -85.9
+      value: -85.900024
       objectReference: {fileID: 0}
     - target: {fileID: 1235783565405650158, guid: 6bb169b2ab34b477ead0a81bd6bff0ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

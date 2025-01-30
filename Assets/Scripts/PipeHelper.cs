@@ -94,6 +94,25 @@ public class PipeHelper : MonoBehaviour
 
     public static bool isWheataffected = false;
 
+    public GameObject vizXHelper;
+    public GameObject vizPHelper;
+    public GameObject aramXHelper;
+    public GameObject aramPHelper;
+    public GameObject sewageXHelper;
+    public GameObject sewagePHelper;
+    public GameObject houseXHelper;
+    public GameObject housePHelper;
+
+    public static GameObject vizX;
+    public static GameObject vizP;
+    public static GameObject aramX;
+    public static GameObject aramP;
+    public static GameObject sewageX;
+    public static GameObject sewageP;
+    public static GameObject houseX;
+    public static GameObject houseP;
+
+
     void Start()
     {
         initHelper();
@@ -114,6 +133,14 @@ public class PipeHelper : MonoBehaviour
         elements = elementsHelper;
         startTiles = startTilesHelper;
         endTiles = endTilesHelper;
+        vizX = vizXHelper;
+        vizP = vizPHelper;
+        aramX = aramXHelper;
+        aramP = aramPHelper;
+        sewageX = sewageXHelper;
+        sewageP = sewagePHelper;
+        houseX = houseXHelper;
+        houseP = housePHelper;
         startPoints.Add("electric", new List<int[]>());
         startPoints.Add("water", new List<int[]>());
         startPoints.Add("sewage", new List<int[]>());
@@ -678,20 +705,60 @@ public class PipeHelper : MonoBehaviour
         }
         getValidTiles();
 
+        int completedHoues = 0;
         foreach(var pipeType in endPoints.Keys) {
             foreach(var endPoint in endPoints[pipeType]) {
                 if(routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() != 0) {
                     var completedTile = completedTiles.FirstOrDefault(t => t.name == pipeType);
                     if(completedTile != null) {
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
+                        switch  (pipeType) {
+                            case "electric":
+                                Debug.Log("electric");
+                                completedHoues++;
+                                break;
+                            case "water":
+                                Debug.Log("water");
+                                vizX.SetActive(false);
+                                vizP.SetActive(true);
+                                break;
+                            case "sewage":
+                                Debug.Log("sewage");
+                                sewageX.SetActive(false);
+                                sewageP.SetActive(true);
+                                break;
+                        }
                     }
                 } else {
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
                     if(endtile != null) {
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
+                        switch  (pipeType) {
+                            case "electric":
+                                Debug.Log("electric");
+                                completedHoues--;
+                                break;
+                            case "water":
+                                Debug.Log("water");
+                                vizX.SetActive(true);
+                                vizP.SetActive(false);
+                                break;
+                            case "sewage":
+                                Debug.Log("sewage");
+                                sewageX.SetActive(true);
+                                sewageP.SetActive(false);
+                                break;
+                        }
                     }
                 }
             }
+        }
+
+        int[] waterEndPoint = endPoints["water"][0];
+        int[] sewageEndPoint = endPoints["sewage"][0];
+        if((waterEndPoint != null && sewageEndPoint != null) && routes.Any(r => r.Any(pos => pos[0] == waterEndPoint[0] && pos[1] == waterEndPoint[1] && pos[2] == waterEndPoint[2]) && routes.Any(r => r.Any(pos => pos[0] == sewageEndPoint[0] && pos[1] == sewageEndPoint[1] && pos[2] == sewageEndPoint[2])))) {
+            aramX.SetActive(false);
+            aramP.SetActive(true);
         }
     }
 
