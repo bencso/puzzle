@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 46264948}
   - component: {fileID: 46264947}
   m_Layer: 5
-  m_Name: GoTo (1)
+  m_Name: GoToMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BACK TO MAIN MENU
+  m_text: "vissza a men\xFCbe"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
   m_sharedMaterial: {fileID: 7381437063696523411, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
@@ -329,8 +329,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292209919
-  m_fontColor: {r: 1, g: 0.9247904, b: 0.8349056, a: 1}
+    rgba: 4286825471
+  m_fontColor: {r: 1, g: 0.7647059, b: 0.5137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 90
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -541,7 +541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: COMPLETED!
+  m_text: "Teljes\xEDtve!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
   m_sharedMaterial: {fileID: 7381437063696523411, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
@@ -3115,7 +3115,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GO TO LEVELS
+  m_text: "vissza a t\xF6bbi p\xE1ly\xE1ra"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
   m_sharedMaterial: {fileID: 7381437063696523411, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
@@ -3124,8 +3124,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292209919
-  m_fontColor: {r: 1, g: 0.9247904, b: 0.8349056, a: 1}
+    rgba: 4286825471
+  m_fontColor: {r: 1, g: 0.7647059, b: 0.5137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3148,7 +3148,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 90
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4087,7 +4087,7 @@ GameObject:
   - component: {fileID: 1696367764}
   - component: {fileID: 1696367767}
   m_Layer: 5
-  m_Name: GoTo
+  m_Name: GoToLevels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4182,7 +4182,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 422892468}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: GoToMenu
+        m_MethodName: GoToLevels
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
