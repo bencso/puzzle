@@ -50,13 +50,13 @@ public class Layer : MonoBehaviour
                     TileBase clickedTile = tilemap.GetTile(tilemap.WorldToCell(position));
                     if (clickedTile == up) {
                         PipeBuilder.SetLayer(0);
-                        text.text = "Szint: 0";
+                        text.text = "0";
                         PipeHelper.tmpTilemap.ClearAllTiles();
                         PipeHelper.Check();
                         }
                     else if (clickedTile == down){
                         PipeBuilder.SetLayer(1);
-                        text.text = "Szint: -1";
+                        text.text = "-1";
                         PipeHelper.tmpTilemap.ClearAllTiles();
                         PipeHelper.Check();
                     }
