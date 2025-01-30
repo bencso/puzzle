@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine.Tilemaps;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 [System.Serializable]
 public class Utility
@@ -100,8 +101,7 @@ public class PipeHelper : MonoBehaviour
     public GameObject aramPHelper;
     public GameObject sewageXHelper;
     public GameObject sewagePHelper;
-    public GameObject houseXHelper;
-    public GameObject housePHelper;
+    public TMP_Text houseNHelper;
 
     public static GameObject vizX;
     public static GameObject vizP;
@@ -109,9 +109,9 @@ public class PipeHelper : MonoBehaviour
     public static GameObject aramP;
     public static GameObject sewageX;
     public static GameObject sewageP;
-    public static GameObject houseX;
-    public static GameObject houseP;
+    public static TMP_Text houseN;
 
+    public static int completedHoues = 0;
 
     void Start()
     {
@@ -139,8 +139,7 @@ public class PipeHelper : MonoBehaviour
         aramP = aramPHelper;
         sewageX = sewageXHelper;
         sewageP = sewagePHelper;
-        houseX = houseXHelper;
-        houseP = housePHelper;
+        houseN = houseNHelper;
         startPoints.Add("electric", new List<int[]>());
         startPoints.Add("water", new List<int[]>());
         startPoints.Add("sewage", new List<int[]>());
@@ -191,6 +190,9 @@ public class PipeHelper : MonoBehaviour
         }
 
         PlaceElements();
+
+        houseN.text = $"{completedHoues}/{endPoints["electric"].Count}";
+
     }
 
     public static void PlaceElements()
@@ -698,6 +700,7 @@ public class PipeHelper : MonoBehaviour
             reset();
             LevelHelper.setMaxLevel();
             SceneManager.LoadScene("EndScreen");
+            return;
         }
         else
         {
@@ -705,7 +708,7 @@ public class PipeHelper : MonoBehaviour
         }
         getValidTiles();
 
-        int completedHoues = 0;
+        int tmpHouseN = 0;
         foreach(var pipeType in endPoints.Keys) {
             foreach(var endPoint in endPoints[pipeType]) {
                 if(routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() != 0) {
@@ -715,7 +718,9 @@ public class PipeHelper : MonoBehaviour
                         switch  (pipeType) {
                             case "electric":
                                 Debug.Log("electric");
-                                completedHoues++;
+                                tmpHouseN++;
+                                completedHoues = tmpHouseN;
+                                houseN.text = $"{completedHoues}/{endPoints[pipeType].Count}";
                                 break;
                             case "water":
                                 Debug.Log("water");
@@ -736,7 +741,8 @@ public class PipeHelper : MonoBehaviour
                         switch  (pipeType) {
                             case "electric":
                                 Debug.Log("electric");
-                                completedHoues--;
+                                completedHoues = tmpHouseN;
+                                houseN.text = $"{completedHoues}/{endPoints[pipeType].Count}";
                                 break;
                             case "water":
                                 Debug.Log("water");
@@ -754,8 +760,13 @@ public class PipeHelper : MonoBehaviour
             }
         }
 
-        int[] waterEndPoint = endPoints["water"][0];
-        int[] sewageEndPoint = endPoints["sewage"][0];
+        int[] waterEndPoint = null;
+        int[] sewageEndPoint = null;
+
+        if(endPoints["water"].Count != 0 && endPoints["sewage"].Count != 0) {
+            waterEndPoint = endPoints["water"][0];
+            sewageEndPoint = endPoints["sewage"][0];
+        }
         if((waterEndPoint != null && sewageEndPoint != null) && routes.Any(r => r.Any(pos => pos[0] == waterEndPoint[0] && pos[1] == waterEndPoint[1] && pos[2] == waterEndPoint[2]) && routes.Any(r => r.Any(pos => pos[0] == sewageEndPoint[0] && pos[1] == sewageEndPoint[1] && pos[2] == sewageEndPoint[2])))) {
             aramX.SetActive(false);
             aramP.SetActive(true);

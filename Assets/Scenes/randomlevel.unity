@@ -23657,6 +23657,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: SuccessCucc
       objectReference: {fileID: 0}
+    - target: {fileID: 557480079709386008, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+      propertyPath: m_text
+      value: '0/0
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 1494197784694456599, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -23737,10 +23743,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2545846145041034432, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644326426470535856, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574364715809771445, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7856693695353038040, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 9124835177635850180, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23749,6 +23771,47 @@ PrefabInstance:
 --- !u!224 &859833802 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1494197784694456599, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &859833803 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 557480079709386008, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &859833804 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6574364715809771445, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859833805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2545846145041034432, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859833806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5195196123471416743, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859833807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4673807372878044895, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859833808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4644326426470535856, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
+  m_PrefabInstance: {fileID: 859833801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859833809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124835177635850180, guid: be13c3b5a88bd4f91acda7f83cdcfe71, type: 3}
   m_PrefabInstance: {fileID: 859833801}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &935949553 stripped
@@ -25990,7 +26053,13 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: d24f8d999ae16af4c8ecae9fd441d744, type: 2}
   - name: Kivezeto
     tile: {fileID: 11400000, guid: 65ced30402f8318409f6a8c10c8a9157, type: 2}
-  completedTilesHelper: []
+  completedTilesHelper:
+  - name: water
+    tile: {fileID: 11400000, guid: de393f3f9ba8441d2b5d381d7a080a34, type: 2}
+  - name: electric
+    tile: {fileID: 11400000, guid: a7e6a910c449b4d6ebc2c531dec8c4e8, type: 2}
+  - name: sewage
+    tile: {fileID: 11400000, guid: 491ef3c9d8917413c966bed8064addab, type: 2}
   talajTilemapHelper: {fileID: 202466053}
   elementsHelper: []
   startTilesHelper:
@@ -26009,6 +26078,13 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 5caf96bba3fd3a44b8f98be6a9d9c55d, type: 2}
   startPointsHelper: []
   endPointsHelper: []
+  vizXHelper: {fileID: 859833808}
+  vizPHelper: {fileID: 859833809}
+  aramXHelper: {fileID: 859833804}
+  aramPHelper: {fileID: 859833805}
+  sewageXHelper: {fileID: 859833806}
+  sewagePHelper: {fileID: 859833807}
+  houseNHelper: {fileID: 859833803}
 --- !u!114 &1836467778
 MonoBehaviour:
   m_ObjectHideFlags: 0
