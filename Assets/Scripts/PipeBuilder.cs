@@ -81,7 +81,13 @@ public class PipeBuilder : MonoBehaviour
             TileBase tile = tileSelection.GetTile(pos);
             if (tile != null)
             {
-                tileSelection.SetTile(pos, tiles[selectedPipe]);
+                var ruleTile = tiles[selectedPipe];
+                if (ruleTile != null)
+                {
+                    var tempTile = ScriptableObject.CreateInstance<Tile>();
+                    tempTile.sprite = ruleTile.m_DefaultSprite;
+                    tileSelection.SetTile(pos, tempTile);
+                }
             }
         }
     }
