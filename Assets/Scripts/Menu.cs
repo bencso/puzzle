@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
 
    public void GoToMenu()
    {
-      if(LevelHelper.getCurrentPlayedLevel() > 0){
+      if(LevelHelper.getCurrentPlayedLevel() >= 0){
          PipeHelper.reset();
       }
       SceneManager.LoadScene("MainMenu");

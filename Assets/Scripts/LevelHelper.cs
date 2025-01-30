@@ -93,6 +93,9 @@ public class LevelHelper : MonoBehaviour
                 return result;
             }
         }
-        return 0;
+        if(currentSceneName == "randomlevel"){
+            return 0;
+        }
+        return -1;
     }
 }
