@@ -227,6 +227,11 @@ public class PipeHelper : MonoBehaviour
         return false;
     }
 
+    public static bool IsWheat(Vector3Int position)
+    {
+        return GetAdjacentPositions(position).Any(pos => buzaTilemap.GetTile(pos) == buzatiles[0]);
+    }
+
     public static void Place(Vector3Int position)
     {
         int selectedPipe = PipeBuilder.selectedPipe;
@@ -306,6 +311,10 @@ public class PipeHelper : MonoBehaviour
                 return;
             };
 
+        // if(IsWheat(position)) {
+        //     return;
+        // }
+
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
     }
@@ -351,6 +360,7 @@ public class PipeHelper : MonoBehaviour
 
     public static void getValidTiles()
     {
+        Debug.Log("getValidTiles");
         tmpTilemap.ClearAllTiles();
         tempPipes.Clear();
         foreach (var route in routes)
@@ -358,9 +368,7 @@ public class PipeHelper : MonoBehaviour
             var pipeType = tiles[selectedPipe];
             var ends = new List<int[]>();
             ends = GetRouteEndPositions(route);
-            foreach (var pos in route) {
-
-            }
+            
             foreach (var pos in route)
             {
                 tilemap[PipeBuilder.currentLayer].CompressBounds();
@@ -394,15 +402,22 @@ public class PipeHelper : MonoBehaviour
                     tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null)
                         continue;
                     
-                    if(endPoints[pipeType.name].Any(endPos => endPos[0] == tilePosition[0] && endPos[1] == tilePosition[1] && endPos[2] == tilePosition[2])) {
+                    if(endPoints[pipeType.name].Any(endPos => endPos[0] == tilePosition[0]
+                     && endPos[1] == tilePosition[1] && endPos[2] == tilePosition[2])
+                     && tiles[PipeBuilder.selectedPipe].name == pipes[GetPipeKey(new int[] { pos[0], pos[1], pos[2] })]) 
+                    {
                         tmpTilemap.SetTile(new Vector3Int(tilePosition[0], tilePosition[1], PipeBuilder.currentLayer), tmpTiles[0]);
                         AddTemp(new int[] { tilePosition[0], tilePosition[1], PipeBuilder.currentLayer }, "temp");
                     }
                     if (tilemap[PipeBuilder.currentLayer].GetTile(tilePosition) != null ||
                     (PipeBuilder.currentLayer == 0 && talajTilemap.GetTile(tilePosition).name == "VizA") ||
                     (buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)) != null &&
-                    buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)).name == "pendroid_assets_326" && PipeBuilder.currentLayer == 0))
-                        continue;
+                    buzaTilemap.GetTile(new Vector3Int(tilePosition[0], tilePosition[1], 0)).name == "pendroid_assets_326" 
+                    && PipeBuilder.currentLayer == 0) || tiles[PipeBuilder.selectedPipe].name != pipes[GetPipeKey(new int[] { pos[0], pos[1], PipeBuilder.currentLayer })])
+                        {
+                            Debug.Log($" {PipeBuilder.selectedPipe} || Pipe type: {tiles[PipeBuilder.selectedPipe].name} \n pipeType: {pipes[GetPipeKey(new int[] { pos[0], pos[1], PipeBuilder.currentLayer })]}");
+                            continue;}
+                    Debug.Log($"Pipe type: {pipeType.name} \n pipeType: {pipes[GetPipeKey(new int[] { pos[0], pos[1], PipeBuilder.currentLayer })]}");
                     tmpTilemap.SetTile(new Vector3Int(tilePosition[0], tilePosition[1], PipeBuilder.currentLayer), tmpTiles[0]);
                     AddTemp(new int[] { tilePosition[0], tilePosition[1], PipeBuilder.currentLayer }, "temp");
                 }
