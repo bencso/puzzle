@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
    public void GoToMenu()
    {
       SceneManager.LoadScene("MainMenu");
+
    }
    public void GoToLevels(){
       SceneManager.LoadScene("LevelMenu");
@@ -19,5 +20,10 @@ public class Menu : MonoBehaviour
    public void GoToRandomLevel()
    {
       SceneManager.LoadScene("randomLevel");
-   }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
