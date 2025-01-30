@@ -71,4 +71,28 @@ public class LevelHelper : MonoBehaviour
     {
         SceneManager.LoadScene("level" + level);
     }
+
+    public static void setMaxLevel()
+    {
+        int currentLevel = getCurrentPlayedLevel();
+        if (currentLevel > PlayerPrefs.GetInt("level"))
+        {
+            PlayerPrefs.SetInt("level", currentLevel);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public static int getCurrentPlayedLevel()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name.ToLower();
+        if (currentSceneName.Contains("level") && currentSceneName != "randomlevel")
+        {
+            string levelNumber = currentSceneName.Replace("level", "");
+            if (int.TryParse(levelNumber, out int result))
+            {
+                return result;
+            }
+        }
+        return 0;
+    }
 }

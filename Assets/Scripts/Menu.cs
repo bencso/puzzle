@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
 
    public void GoToMenu()
    {
+      PipeHelper.reset();
       SceneManager.LoadScene("MainMenu");
 
    }

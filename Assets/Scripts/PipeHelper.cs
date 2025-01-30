@@ -86,6 +86,8 @@ public class PipeHelper : MonoBehaviour
 
     public static string tempTileType = null;
 
+    public static bool isWheataffected = false;
+
     void Start()
     {
         initHelper();
@@ -180,6 +182,7 @@ public class PipeHelper : MonoBehaviour
                 {
                     case "buza":
                         buzaTilemap.SetTile(tilePos, buzatiles[0]);
+                        isWheataffected = false;
                         break;
                     case "hegy":
                         buzaTilemap.SetTile(tilePos, utilities[3].tile);
@@ -481,11 +484,15 @@ public class PipeHelper : MonoBehaviour
                 if (key[2] == 0)
                 {
                     buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
+                    isWheataffected = true;
+                    Debug.Log("1. before place isWheataffected: " + isWheataffected);
                     SorroundPlaceBuza(key);
                 }
                 if (key[2] == 1)
                 {
                     buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
+                    isWheataffected = true;
+                    Debug.Log("2. before place isWheataffected: " + isWheataffected);
                     SorroundPlaceBuza(key);
                 }
             }
@@ -572,7 +579,7 @@ public class PipeHelper : MonoBehaviour
 
         }
 
-                    if (!isLevelNotCompleted)
+                    if (!isLevelNotCompleted && !isWheataffected)
             {
                 Debug.Log($"Level completed");
                 reset();
