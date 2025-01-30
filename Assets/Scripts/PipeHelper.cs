@@ -157,7 +157,6 @@ public class PipeHelper : MonoBehaviour
         {
             endPoints[endPoint.name].Add(new int[] { endPoint.x, endPoint.y, endPoint.z });
         }
-        PipeBuilder.SetLayer(0);
     }
 
     public static void initMap()
