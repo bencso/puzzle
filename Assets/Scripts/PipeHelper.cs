@@ -583,6 +583,7 @@ public class PipeHelper : MonoBehaviour
             {
                 Debug.Log($"Level completed");
                 reset();
+                LevelHelper.setMaxLevel();
                 SceneManager.LoadScene("EndScreen");
             }
             else
