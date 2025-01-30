@@ -320,10 +320,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GO TO MENU!
+  m_text: BACK TO MAIN MENU
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
-  m_sharedMaterial: {fileID: -1128240720019097122, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
+  m_sharedMaterial: {fileID: -6141922650918949550, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -347,13 +347,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 90
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontSizeMax: 90
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -543,8 +543,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: COMPLETED!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
-  m_sharedMaterial: {fileID: -1128240720019097122, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
+  m_sharedMaterial: {fileID: -6141922650918949550, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -568,12 +568,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 123.05
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 150
   m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -3115,10 +3115,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GO TO LEVELS!
+  m_text: GO TO LEVELS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
-  m_sharedMaterial: {fileID: -1128240720019097122, guid: dfb3350828e5c8440b391fd074fe889e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
+  m_sharedMaterial: {fileID: -6141922650918949550, guid: 6eb79cd8215c94c82a9c82b0b043e915, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3142,13 +3142,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 90
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontSizeMax: 90
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3933,7 +3933,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 1
   m_CellSize: {x: 1000, y: 100}
-  m_Spacing: {x: 0, y: 40}
+  m_Spacing: {x: 0, y: 80}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1632604958
