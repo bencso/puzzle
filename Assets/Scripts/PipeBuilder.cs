@@ -130,11 +130,13 @@ public class PipeBuilder : MonoBehaviour
                         {
                             if (selectedPipe == 0) SelectPipe(tiles.Length - 1);
                             else SelectPipe(selectedPipe -= 1);
+                            PipeHelper.getValidTiles();
                         }
                         else if (clickedTile == right)
                         {
                             if (selectedPipe == tiles.Length - 1) SelectPipe(0);
                             else SelectPipe(selectedPipe += 1);
+                            PipeHelper.getValidTiles();
                         }
                     }
                 }
