@@ -474,12 +474,14 @@ public class PipeHelper : MonoBehaviour
 
         if (tiles[selectedPipe].name == "electric")
         {
-            bool hasBuzaNearby = Enumerable.Range(-1, 3)
-                .SelectMany(x => Enumerable.Range(1, 3)
-                    .Select(y => new Vector3Int(key[0] + x, key[1] + y, 0)))
-                .Any(pos => buzaTilemap.GetTile(pos) == buzatiles[0]);
+            bool hasBuzaNearby = new Vector3Int[] {
+                new Vector3Int(key[0] + 1, key[1], 0),
+                new Vector3Int(key[0] - 1, key[1], 0), 
+                new Vector3Int(key[0], key[1] + 1, 0),
+                new Vector3Int(key[0], key[1] - 1, 0)
+            }.Any(pos => buzaTilemap.GetTile(pos) == buzatiles[0]);
 
-            if ((hasBuzaNearby || GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1)) && buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) != null)
+            if (hasBuzaNearby || GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1))
             {
                 if (key[2] == 0)
                 {
