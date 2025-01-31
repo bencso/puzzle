@@ -388,6 +388,7 @@ public class PipeHelper : MonoBehaviour
 
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
+        AudioManager.Instance.PlayRandomTileSound();
     }
 
     public static void Remove(Vector3Int position)
@@ -718,6 +719,7 @@ public class PipeHelper : MonoBehaviour
                     var completedTile = completedTiles.FirstOrDefault(t => t.name == pipeType);
                     if(completedTile != null) {
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
+                        AudioManager.Instance.PlaySuccess();
                         switch  (pipeType) {
                             case "electric":
                                 Debug.Log("electric");
@@ -740,6 +742,7 @@ public class PipeHelper : MonoBehaviour
                 } else {
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
                     if(endtile != null) {
+                        AudioManager.Instance.PlayUnsuccess();
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
                         switch  (pipeType) {
                             case "electric":
