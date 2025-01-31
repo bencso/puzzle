@@ -111,7 +111,11 @@ public class PipeHelper : MonoBehaviour
     public static GameObject sewageP;
     public static TMP_Text houseN;
 
+    public static HashSet<string> successPipes = new HashSet<string>();
+
+
     public static int completedHoues = 0;
+    private static int houseHelper = 0;
 
     void Start()
     {
@@ -718,8 +722,9 @@ public class PipeHelper : MonoBehaviour
                 if(routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() != 0) {
                     var completedTile = completedTiles.FirstOrDefault(t => t.name == pipeType);
                     if(completedTile != null) {
-                        buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
-                        AudioManager.Instance.PlaySuccess();
+                        if(pipes[GetPipeKey(new int[] { endPoint[0], endPoint[1], endPoint[2] })] == pipeType) {
+                            buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
+                        
                         switch  (pipeType) {
                             case "electric":
                                 Debug.Log("electric");
@@ -738,11 +743,25 @@ public class PipeHelper : MonoBehaviour
                                 sewageP.SetActive(true);
                                 break;
                         }
+
+                        if(pipeType != "electric") {
+                            if(!successPipes.Contains(pipeType)) {
+                                AudioManager.Instance.PlaySuccess();
+                                successPipes.Add(pipeType);
+                            }
+                        } else {
+                            if(tmpHouseN > houseHelper) {
+                                AudioManager.Instance.PlaySuccess();
+                                houseHelper = tmpHouseN;
+                            }
+                        }
+
                     }
+                }
                 } else {
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
                     if(endtile != null) {
-                        AudioManager.Instance.PlayUnsuccess();
+                        // AudioManager.Instance.PlayUnsuccess();
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
                         switch  (pipeType) {
                             case "electric":
@@ -763,6 +782,19 @@ public class PipeHelper : MonoBehaviour
                         }
                     }
                 }
+
+                if(pipeType != "electric") {
+                            if(successPipes.Contains(pipeType)) {
+                                AudioManager.Instance.PlayUnsuccess();
+                                successPipes.Remove(pipeType);
+                            }
+                } else {
+                    if(tmpHouseN < houseHelper) {
+                        AudioManager.Instance.PlayUnsuccess();
+                        houseHelper = tmpHouseN;
+                    }
+                }
+
             }
         }
 
