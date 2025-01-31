@@ -624,6 +624,9 @@ public class PipeHelper : MonoBehaviour
 
     public static void SorroundGetHal(int[] key)
     {
+        if(pipes[GetPipeKey(new int[] { key[0], key[1], PipeBuilder.currentLayer })] != "electric") {
+            return;
+        }
         for (int x = -4; x <= 4; x++)
         {
             for (int y = -4; y <= 4; y++)
@@ -631,8 +634,7 @@ public class PipeHelper : MonoBehaviour
                 if (x == 0 && y == 0) continue;
                 var surroundPos = new Vector3Int(key[0] + x, key[1] + y, 0);
                 var surroundTile = buzaTilemap.GetTile(surroundPos);
-
-                if (surroundTile != null && surroundTile.name == "pendroid_assets_207")
+                if (surroundTile != null && surroundTile.name == "pendroid_assets_206")
                 {
                     buzaTilemap.SetTile(surroundPos, utilities[2].tile);
                 }
