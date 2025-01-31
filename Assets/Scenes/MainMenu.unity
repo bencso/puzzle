@@ -255,17 +255,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143044738}
   m_CullTransparentMesh: 1
+--- !u!1 &166922112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7921117472222668717, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
+  m_PrefabInstance: {fileID: 1011916313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &417964548 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6712502218714838341, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
   m_PrefabInstance: {fileID: 1011916313}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 166922112}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe3aea9519c074720a95baf08e231a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &417964550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166922112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27227ef5e467401c92d74d7381da6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 2bcc94a28969c4a51b325b570cfc8dce, type: 2}
+  musicSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!1 &418044625
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,7 +3740,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7921117472222668717, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 417964550}
   m_SourcePrefab: {fileID: 100100000, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
 --- !u!1 &1420251725
 GameObject:
@@ -4954,7 +4977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1316616010473271737, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -507.665
+      value: -507.66504
       objectReference: {fileID: 0}
     - target: {fileID: 1975521288860530533, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4970,7 +4993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1975521288860530533, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -66.095
+      value: -66.09497
       objectReference: {fileID: 0}
     - target: {fileID: 1993609271241175641, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5038,7 +5061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3429295203660215736, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -360.475
+      value: -360.47498
       objectReference: {fileID: 0}
     - target: {fileID: 3742681868689622877, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5070,7 +5093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4101949436857857798, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1653.1649
+      value: -1653.165
       objectReference: {fileID: 0}
     - target: {fileID: 4148581933244954557, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_Pivot.x
@@ -5166,7 +5189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4557372061309515593, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -213.285
+      value: -213.28503
       objectReference: {fileID: 0}
     - target: {fileID: 4747536638331953743, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5231,6 +5254,33 @@ PrefabInstance:
     - target: {fileID: 6549773103777363439, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -1390.8049
+      objectReference: {fileID: 0}
+    - target: {fileID: 8161429446456250290, guid: b10072a352b0e41a5b35f657260b8886, type: 3}
+      propertyPath: m_text
+      value: "A newfactory j\xE1t\xE9kunkban t\xF6bb infrastrukt\xFAra h\xE1l\xF3zatot
+        kell \xF6sszekapcsolnod.\n3 k\xFCl\xF6n infrastrukt\xFAr\xE1b\xF3l \xE1ll,
+        melyek a k\xF6vetkez\xF6k\n* Tiszta v\xEDz - k\xE9k h\xE1l\xF3zat\n* \xC1ram
+        - S\xE1rga h\xE1l\xF3zat\n* Szennyv\xEDz - Barna h\xE1l\xF3zat\nEzeket az
+        adott sz\xEDn\xFC cs\xF6vekkel, \xE9p\xEDt\xE9s m\xF3dban a h\xE1l\xF3zathoz
+        csatlakoztathatod.\nA v\xEDz (k\xE9k) h\xE1l\xF3zat l\xE9trehoz\xE1s\xE1hoz,
+        v\xE1laszd ki az \xE9p\xEDt\xE9s m\xF3dban (jobb fels\u0151 sarokban l\xE9v\xF6
+        kalap\xE1ccsal tudsz \xE1tv\xE1ltani) a k\xE9k cs\xF6vet. A p\xE1ly\xE1n
+        l\xE1tni fogsz a v\xEDzben egy k\xE9k \xE9p\xFCletet, ez a v\xEDzszivatty\xFAd,
+        innen kell elvezetned a vizet a gy\xE1rad v\xEDzkezel\xF6 rendszer\xE9be
+        (szint\xFAgy egy k\xE9k \xE9p\xFClet).\nA szennyv\xEDz (barna) h\xE1l\xF3zat
+        is hasonl\xF3an m\xFCk\xF6dik, viszont azt a gy\xE1rb\xF3l kell kivezetned
+        a tengern\xE9l kialak\xEDtott kifoly\xF3hoz.\nAz \xE1ram (s\xE1rga) h\xE1l\xF3zat
+        m\xE1sk\xE9nt m\xFCk\xF6dik a t\xF6bbi kett\u0151 infrastrukt\xFAr\xE1hoz
+        k\xE9pest. Itt az \xE1ramgener\xE1torb\xF3l (v\xF6r\xF6s \xE9p\xFClet) kell
+        a felhaszn\xE1l\xF3knak (teh\xE1t a h\xE1ztart\xE1sokba) kell az \xE1ramot
+        elszolg\xE1ltatni.\nVigy\xE1zz! A hegyeken kereszt\xFCl nem tudsz cs\xF6veket
+        \xE1tvezetni. A b\xFAzamez\xF6k\xF6n \xE9s azok k\xF6zvetlen szomsz\xE9djain
+        kereszt\xFCl (4 ir\xE1nyban) nem lehet \xE9s nem is hidalhat \xE1t vezet\xE9k,
+        mivel meg\xF6li a b\xFAzamez\xF6ket az \xE9p\xEDtkez\xE9s. Amennyiben b\xFAzamez\xF6
+        s\xE9r\xFClt, nem teljes\xEDthet\xF6 a j\xE1t\xE9k, \xE9s el kell t\xE1vol\xEDtanod
+        a rossz helyeken l\xE9v\xF6 cs\xF6veket.\nV\xEDz alatt a -1. szinten tudsz
+        \xE9p\xEDteni h\xE1l\xF3zatot, a halacsk\xE1kra figyelj! Az \xE1ram megr\xE1zza
+        \xF6ket! A mechanizmusa hasonl\xEDt a b\xFAzamez\xF6kre."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
