@@ -47,7 +47,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -312,3 +312,4 @@ MonoBehaviour:
   tilePlace1: {fileID: 8300000, guid: 356df7f3b658143a085432f5322fe499, type: 3}
   tilePlace2: {fileID: 8300000, guid: 585f1aac08c4b477c8dffaff53d26818, type: 3}
   button: {fileID: 8300000, guid: 9a7a8454d62914f299b1d2f157940e02, type: 3}
+  delete: {fileID: 8300000, guid: 513a391d8d6ef4d4390a6e29c08a2b23, type: 3}

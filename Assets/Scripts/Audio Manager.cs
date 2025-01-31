@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip tilePlace1;
     public AudioClip tilePlace2;
     public AudioClip button;
+    public AudioClip delete;
 
 
     private void Awake()
@@ -28,6 +29,11 @@ public class AudioManager : MonoBehaviour
     public void PlayButton()
     {
         sfxSource.PlayOneShot(button);
+    }
+
+    public void PlayDelete()
+    {
+        sfxSource.PlayOneShot(delete);
     }
 
     public void PlaySuccess()
