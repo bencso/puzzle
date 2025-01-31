@@ -2,11 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class LevelHelper : MonoBehaviour
 {
     [SerializeField]
     public Font font;
+
+    public GameObject levelButtonPrefab;
 
     int level;
 
@@ -23,29 +26,25 @@ public class LevelHelper : MonoBehaviour
             PlayerPrefs.Save();
         }
         int levelCount = GetLevelCount();
-        GameObject buttonGrid = GameObject.Find("ButtonGrid");
+        GameObject buttonGrid = GameObject.Find("layout");
         for (int i = 0; i < levelCount; i++)
         {
             int currentLevel = i + 1;
-            GameObject button = new GameObject("Level" + currentLevel);
-            button.transform.SetParent(buttonGrid.transform, false);
-            button.AddComponent<RectTransform>();
-            button.AddComponent<Button>();
-            button.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 100);
 
-            Button buttonComponent = button.GetComponent<Button>();
+            GameObject newButton = Instantiate(levelButtonPrefab);
+            newButton.SetActive(true);
+
+            newButton.transform.SetParent(buttonGrid.transform);
+            newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            Button buttonComponent = newButton.GetComponent<Button>();
             buttonComponent.onClick.AddListener(() => LoadLevel(currentLevel));
 
             buttonComponent.interactable = currentLevel <= level;
 
-            Text buttonText = button.AddComponent<Text>();
-            buttonText.text = $"{currentLevel}";
-            buttonText.alignment = TextAnchor.MiddleCenter;
-            buttonText.fontSize = 100;
+            TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
+            buttonText.text = $"{currentLevel}. PÁLYA";
             buttonText.color = currentLevel <= level ? Color.white : Color.gray;
-            buttonText.resizeTextForBestFit = true;
-            buttonText.font = font;
-            buttonText.resizeTextMaxSize = 100;
         }
     }
 

@@ -780,7 +780,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 532405947629687825}
   - {fileID: 1975521288860530533}
   - {fileID: 4557372061309515593}
   - {fileID: 3429295203660215736}
@@ -793,11 +792,12 @@ RectTransform:
   - {fileID: 6549773103777363439}
   - {fileID: 4747536638331953743}
   - {fileID: 1993609271241175641}
+  - {fileID: 532405947629687825}
   m_Father: {fileID: 8364592484493692919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1115.1097}
+  m_AnchoredPosition: {x: 0, y: -1309.3748}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3753253194534226054
@@ -2069,10 +2069,10 @@ RectTransform:
   - {fileID: 1093873639205679618}
   m_Father: {fileID: 1763220469708320925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1094.9999, y: -945.59}
-  m_SizeDelta: {x: 424.86, y: 118.65}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.00012207031, y: 134.40997}
+  m_SizeDelta: {x: 424.86, y: 118.650024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7704035186240007332
 CanvasRenderer:
@@ -2130,6 +2130,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3349,7 +3361,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1841.81, y: 463.94}
+  m_SizeDelta: {x: 1841.81, y: 852.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7238516487686701435
 CanvasRenderer:
@@ -3379,7 +3391,29 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "LE\xCDR\xC1S"
+  m_text: "A newfactory j\xE1t\xE9kunkban t\xF6bb infrastrukt\xFAra h\xE1l\xF3zatot
+    kell \xF6sszekapcsolnod.\n3 k\xFCl\xF6n infrastrukt\xFAr\xE1b\xF3l \xE1ll, melyek
+    a k\xF6vetkez\u0151k\n* Tiszta v\xEDz - k\xE9k h\xE1l\xF3zat\n* \xC1ram - S\xE1rga
+    h\xE1l\xF3zat\n* Szennyv\xEDz - Barna h\xE1l\xF3zat\nEzeket az adott sz\xEDn\u0171
+    cs\xF6vekkel, \xE9p\xEDt\xE9s m\xF3dban a h\xE1l\xF3zathoz csatlakoztathatod.\nA
+    v\xEDz (k\xE9k) h\xE1l\xF3zat l\xE9trehoz\xE1s\xE1hoz, v\xE1laszd ki az \xE9p\xEDt\xE9s
+    m\xF3dban (jobb fels\u0151 sarokban l\xE9v\u0151 kalap\xE1ccsal tudsz \xE1tv\xE1ltani)
+    a k\xE9k cs\xF6vet. A p\xE1ly\xE1n l\xE1tni fogsz a v\xEDzben egy k\xE9k \xE9p\xFCletet,
+    ez a v\xEDzszivatty\xFAd, innen kell elvezetned a vizet a gy\xE1rad v\xEDzkezel\u0151
+    rendszer\xE9be (szint\xFAgy egy k\xE9k \xE9p\xFClet).\nA szennyv\xEDz (barna)
+    h\xE1l\xF3zat is hasonl\xF3an m\u0171k\xF6dik, viszont azt a gy\xE1rb\xF3l kell
+    kivezetned a tengern\xE9l kialak\xEDtott kifoly\xF3hoz.\nAz \xE1ram (s\xE1rga)
+    h\xE1l\xF3zat m\xE1sk\xE9nt m\u0171k\xF6dik a t\xF6bbi kett\u0151 infrastrukt\xFAr\xE1hoz
+    k\xE9pest. Itt az \xE1ramgener\xE1torb\xF3l (v\xF6r\xF6s \xE9p\xFClet) kell a
+    felhaszn\xE1l\xF3knak (teh\xE1t a h\xE1ztart\xE1sokba) kell az \xE1ramot elszolg\xE1ltatni.\nVigy\xE1zz!
+    A hegyeken kereszt\xFCl nem tudsz cs\xF6veket \xE1tvezetni. A b\xFAzamez\u0151k\xF6n
+    \xE9s azok k\xF6zvetlen szomsz\xE9djain kereszt\xFCl (4 ir\xE1nyban) nem lehet
+    \xE9s nem is hidalhat \xE1t vezet\xE9k, mivel meg\xF6li a b\xFAzamez\u0151ket
+    az \xE9p\xEDtkez\xE9s. Amennyiben b\xFAzamez\u0151 s\xE9r\xFClt, nem teljes\xEDthet\u0151
+    a j\xE1t\xE9k, \xE9s el kell t\xE1vol\xEDtanod a rossz helyeken l\xE9v\u0151
+    cs\xF6veket.\nV\xEDz alatt a -1. szinten tudsz \xE9p\xEDteni h\xE1l\xF3zatot,
+    a halacsk\xE1kra figyelj! Az \xE1ram megr\xE1zza \u0151ket! A mechanizmusa hasonl\xEDt
+    a b\xFAzamez\u0151kre."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
   m_sharedMaterial: {fileID: 7381437063696523411, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
