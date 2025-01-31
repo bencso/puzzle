@@ -404,6 +404,7 @@ public class PipeHelper : MonoBehaviour
             tempTileType = tilemap[PipeBuilder.currentLayer].GetTile(position).name;
             tilemap[PipeBuilder.currentLayer].SetTile(position, null);
             pipes.Remove(GetPipeKey(new int[] { position.x, position.y, PipeBuilder.currentLayer }));
+            AudioManager.Instance.PlayDelete();
         }
         Check();
         foreach (var key in pipes.Keys.ToList())
@@ -780,7 +781,6 @@ public class PipeHelper : MonoBehaviour
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
                     if (endtile != null)
                     {
-                        // AudioManager.Instance.PlayUnsuccess();
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
                         switch (pipeType)
                         {
