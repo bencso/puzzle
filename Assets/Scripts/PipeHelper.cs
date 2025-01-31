@@ -591,19 +591,20 @@ public class PipeHelper : MonoBehaviour
 
             if (hasBuzaNearby || GetBuzaTile(0, key, 0) || GetBuzaTile(0, key, 1))
             {
-                if (key[2] == 0)
+                if (PipeBuilder.currentLayer == 0)
                 {
                     buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), null);
                     isWheataffected = true;
                     Debug.Log("1. before place isWheataffected: " + isWheataffected);
                     SorroundPlaceBuza(key);
                 }
-                if (key[2] == 1)
+                if (PipeBuilder.currentLayer == 1)
                 {
-                    buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
-                    isWheataffected = true;
-                    Debug.Log("2. before place isWheataffected: " + isWheataffected);
-                    SorroundPlaceBuza(key);
+                    if(buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) == buzatiles[0]) {
+                        buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
+                        isWheataffected = true;
+                        Debug.Log("2. before place isWheataffected: " + isWheataffected);
+                    }
                 }
             }
         }
