@@ -478,6 +478,34 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3620974785357717141, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 518812208}
+    - target: {fileID: 3620974785357717141, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSFXVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743606908157511018, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 518812208}
+    - target: {fileID: 3743606908157511018, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598988985247829041, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598988985247829041, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598988985247829041, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5745404764876890520, guid: be518854fda994858aad01bb670ae61b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -485,6 +513,14 @@ PrefabInstance:
     - target: {fileID: 5745404764876890520, guid: be518854fda994858aad01bb670ae61b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288229358367323854, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288229358367323854, guid: be518854fda994858aad01bb670ae61b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7786789582575006982, guid: be518854fda994858aad01bb670ae61b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -499,6 +535,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be518854fda994858aad01bb670ae61b, type: 3}
+--- !u!114 &187330756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3620974785357717141, guid: be518854fda994858aad01bb670ae61b, type: 3}
+  m_PrefabInstance: {fileID: 187330755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &202466050
 GameObject:
   m_ObjectHideFlags: 0
@@ -22956,6 +23003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 2bcc94a28969c4a51b325b570cfc8dce, type: 2}
   musicSlider: {fileID: 1075987956}
+  sfxSlider: {fileID: 187330756}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -25959,6 +26007,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7327997474664628383, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 26073c57ef84a446ba42a7bc70381dc4, type: 3}
+    - target: {fileID: 7327997474664628383, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 26073c57ef84a446ba42a7bc70381dc4, type: 3}
     - target: {fileID: 7921117472222668717, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
       propertyPath: m_Name
       value: Audio

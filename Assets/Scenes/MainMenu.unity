@@ -3666,14 +3666,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7327997474664628383, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 8300000, guid: 988869941bd5f43e28071045a2badbac, type: 3}
-    - target: {fileID: 7327997474664628383, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 988869941bd5f43e28071045a2badbac, type: 3}
     - target: {fileID: 7921117472222668717, guid: 06f0de94d0f344a7c9ce24b76bfcbfc4, type: 3}
       propertyPath: m_Name
       value: Audio
@@ -4489,7 +4481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RANDOM MAP
+  m_text: "RANDOM P\xC1LYA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
   m_sharedMaterial: {fileID: 7381437063696523411, guid: 19205ca06669b43539b141e1b1069f18, type: 2}
