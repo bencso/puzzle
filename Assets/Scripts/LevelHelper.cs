@@ -74,7 +74,7 @@ public class LevelHelper : MonoBehaviour
 
     public static void setMaxLevel()
     {
-        int currentLevel = getCurrentPlayedLevel();
+        int currentLevel = getCurrentPlayedLevel()+1;
         if (currentLevel > PlayerPrefs.GetInt("level"))
         {
             PlayerPrefs.SetInt("level", currentLevel);

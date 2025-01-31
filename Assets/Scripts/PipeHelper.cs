@@ -719,6 +719,7 @@ public class PipeHelper : MonoBehaviour
                     var completedTile = completedTiles.FirstOrDefault(t => t.name == pipeType);
                     if(completedTile != null) {
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
+                        AudioManager.Instance.PlaySuccess();
                         switch  (pipeType) {
                             case "electric":
                                 Debug.Log("electric");
@@ -741,6 +742,7 @@ public class PipeHelper : MonoBehaviour
                 } else {
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
                     if(endtile != null) {
+                        AudioManager.Instance.PlayUnsuccess();
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
                         switch  (pipeType) {
                             case "electric":
