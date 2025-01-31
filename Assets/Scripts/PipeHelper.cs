@@ -285,7 +285,7 @@ public class PipeHelper : MonoBehaviour
         {
             return;
         }
-        
+
         if (tiles[PipeBuilder.selectedPipe].name == "electric")
         {
             foreach (var currentPipeType in endPoints.Keys)
@@ -429,7 +429,7 @@ public class PipeHelper : MonoBehaviour
         Check();
 
 
-        
+
         foreach (var currentPipeType in endPoints.Keys)
         {
             if (currentPipeType != "electric")
@@ -439,7 +439,8 @@ public class PipeHelper : MonoBehaviour
                     if (routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() == 0)
                     {
                         var electricstart = startPoints["electric"][0];
-                        if(electricstart != null && !(electricstart[0] == position.x && electricstart[1] == position.y && electricstart[2] == position.z)) {
+                        if (electricstart != null && !(electricstart[0] == position.x && electricstart[1] == position.y && electricstart[2] == position.z))
+                        {
                             Remove(new Vector3Int(electricstart[0], electricstart[1], electricstart[2]));
                         }
                     }
@@ -605,7 +606,8 @@ public class PipeHelper : MonoBehaviour
                 }
                 if (PipeBuilder.currentLayer == 1)
                 {
-                    if(buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) == buzatiles[0]) {
+                    if (buzaTilemap.GetTile(new Vector3Int(key[0], key[1], 0)) == buzatiles[0])
+                    {
                         buzaTilemap.SetTile(new Vector3Int(key[0], key[1], 0), buzatiles[1]);
                         isWheataffected = true;
                         Debug.Log("2. before place isWheataffected: " + isWheataffected);
@@ -629,7 +631,8 @@ public class PipeHelper : MonoBehaviour
 
     public static void SorroundGetHal(int[] key)
     {
-        if(pipes[GetPipeKey(new int[] { key[0], key[1], PipeBuilder.currentLayer })] != "electric") {
+        if (pipes[GetPipeKey(new int[] { key[0], key[1], PipeBuilder.currentLayer })] != "electric")
+        {
             return;
         }
         for (int x = -4; x <= 4; x++)
@@ -717,53 +720,70 @@ public class PipeHelper : MonoBehaviour
         getValidTiles();
 
         int tmpHouseN = 0;
-        foreach(var pipeType in endPoints.Keys) {
-            foreach(var endPoint in endPoints[pipeType]) {
-                if(routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() != 0) {
+        foreach (var pipeType in endPoints.Keys)
+        {
+            foreach (var endPoint in endPoints[pipeType])
+            {
+                if (routes.Where(r => r.Any(pos => pos[0] == endPoint[0] && pos[1] == endPoint[1] && pos[2] == endPoint[2])).Count() != 0)
+                {
                     var completedTile = completedTiles.FirstOrDefault(t => t.name == pipeType);
-                    if(completedTile != null) {
-                        if(pipes[GetPipeKey(new int[] { endPoint[0], endPoint[1], endPoint[2] })] == pipeType) {
+                    if (completedTile != null)
+                    {
+                        if (pipes[GetPipeKey(new int[] { endPoint[0], endPoint[1], endPoint[2] })] == pipeType)
+                        {
                             buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), completedTile.tile);
-                        
-                        switch  (pipeType) {
-                            case "electric":
-                                Debug.Log("electric");
-                                tmpHouseN++;
-                                completedHoues = tmpHouseN;
-                                houseN.text = $"{completedHoues}/{endPoints[pipeType].Count}";
-                                break;
-                            case "water":
-                                Debug.Log("water");
-                                vizX.SetActive(false);
-                                vizP.SetActive(true);
-                                break;
-                            case "sewage":
-                                Debug.Log("sewage");
-                                sewageX.SetActive(false);
-                                sewageP.SetActive(true);
-                                break;
-                        }
 
-                        if(pipeType != "electric") {
-                            if(!successPipes.Contains(pipeType)) {
-                                AudioManager.Instance.PlaySuccess();
-                                successPipes.Add(pipeType);
+                            switch (pipeType)
+                            {
+                                case "electric":
+                                    Debug.Log("electric");
+                                    tmpHouseN++;
+                                    completedHoues = tmpHouseN;
+                                    houseN.text = $"{completedHoues}/{endPoints[pipeType].Count}";
+                                    break;
+                                case "water":
+                                    Debug.Log("water");
+                                    vizX.SetActive(false);
+                                    vizP.SetActive(true);
+                                    break;
+                                case "sewage":
+                                    Debug.Log("sewage");
+                                    sewageX.SetActive(false);
+                                    sewageP.SetActive(true);
+                                    break;
                             }
-                        } else {
-                            if(tmpHouseN > houseHelper) {
-                                AudioManager.Instance.PlaySuccess();
-                                houseHelper = tmpHouseN;
-                            }
-                        }
 
+                            if (pipeType != "electric")
+                            {
+                                if (!successPipes.Contains(pipeType))
+                                {
+                                    AudioManager.Instance.PlaySuccess();
+                                    successPipes.Add(pipeType);
+                                    Debug.Log("successPipes: " + successPipes.Count);
+                                }
+                            }
+                            else
+                            {
+                                if (tmpHouseN > houseHelper)
+                                {
+                                    AudioManager.Instance.PlaySuccess();
+                                    houseHelper = tmpHouseN;
+                                    Debug.Log("houseHelper: " + houseHelper);
+                                }
+                            }
+
+                        }
                     }
                 }
-                } else {
+                else
+                {
                     var endtile = endTiles.FirstOrDefault(t => t.name == pipeType);
-                    if(endtile != null) {
+                    if (endtile != null)
+                    {
                         // AudioManager.Instance.PlayUnsuccess();
                         buzaTilemap.SetTile(new Vector3Int(endPoint[0], endPoint[1], 0), endtile.tile);
-                        switch  (pipeType) {
+                        switch (pipeType)
+                        {
                             case "electric":
                                 Debug.Log("electric");
                                 completedHoues = tmpHouseN;
@@ -780,20 +800,31 @@ public class PipeHelper : MonoBehaviour
                                 sewageP.SetActive(false);
                                 break;
                         }
+
+
+                        if (pipeType != "electric")
+                        {
+                            if (successPipes.Contains(pipeType))
+                            {
+                                AudioManager.Instance.PlayUnsuccess();
+                                successPipes.Remove(pipeType);
+                                Debug.Log("successPipes: " + successPipes.Count);
+                            }
+                        }
+                        else
+                        {
+                            if (tmpHouseN < houseHelper)
+                            {
+                                AudioManager.Instance.PlayUnsuccess();
+                                houseHelper = tmpHouseN;
+                                Debug.Log("houseHelper: " + houseHelper);
+                            }
+                        }
+
                     }
                 }
 
-                if(pipeType != "electric") {
-                            if(successPipes.Contains(pipeType)) {
-                                AudioManager.Instance.PlayUnsuccess();
-                                successPipes.Remove(pipeType);
-                            }
-                } else {
-                    if(tmpHouseN < houseHelper) {
-                        AudioManager.Instance.PlayUnsuccess();
-                        houseHelper = tmpHouseN;
-                    }
-                }
+
 
             }
         }
@@ -801,11 +832,13 @@ public class PipeHelper : MonoBehaviour
         int[] waterEndPoint = null;
         int[] sewageEndPoint = null;
 
-        if(endPoints["water"].Count != 0 && endPoints["sewage"].Count != 0) {
+        if (endPoints["water"].Count != 0 && endPoints["sewage"].Count != 0)
+        {
             waterEndPoint = endPoints["water"][0];
             sewageEndPoint = endPoints["sewage"][0];
         }
-        if((waterEndPoint != null && sewageEndPoint != null) && routes.Any(r => r.Any(pos => pos[0] == waterEndPoint[0] && pos[1] == waterEndPoint[1] && pos[2] == waterEndPoint[2]) && routes.Any(r => r.Any(pos => pos[0] == sewageEndPoint[0] && pos[1] == sewageEndPoint[1] && pos[2] == sewageEndPoint[2])))) {
+        if ((waterEndPoint != null && sewageEndPoint != null) && routes.Any(r => r.Any(pos => pos[0] == waterEndPoint[0] && pos[1] == waterEndPoint[1] && pos[2] == waterEndPoint[2]) && routes.Any(r => r.Any(pos => pos[0] == sewageEndPoint[0] && pos[1] == sewageEndPoint[1] && pos[2] == sewageEndPoint[2]))))
+        {
             aramX.SetActive(false);
             aramP.SetActive(true);
         }
