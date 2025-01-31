@@ -388,6 +388,7 @@ public class PipeHelper : MonoBehaviour
 
         tilemap[PipeBuilder.currentLayer].SetTile(position, tiles[selectedPipe]);
         PipeHelper.AddPipe(new int[] { position.x, position.y, PipeBuilder.currentLayer }, tiles[selectedPipe].name);
+        AudioManager.Instance.PlayRandomTileSound();
     }
 
     public static void Remove(Vector3Int position)
