@@ -16,7 +16,7 @@ PlayerSettings:
   productName: NewFactory
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.39607847, g: 0.11764707, b: 0.04705883, a: 0}
+  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 0
