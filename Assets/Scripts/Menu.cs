@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -10,23 +11,25 @@ public class Menu : MonoBehaviour
 
    public void GoToMenu()
    {
-      if(LevelHelper.getCurrentPlayedLevel() >= 0){
+      if (LevelHelper.getCurrentPlayedLevel() >= 0)
+      {
          PipeHelper.reset();
       }
       SceneManager.LoadScene("MainMenu");
 
    }
-   public void GoToLevels(){
-      SceneManager.LoadScene("LevelMenu");
+   public void GoToLevels()
+   {
+      MenuHelper.buttonFunction();
    }
 
    public void GoToRandomLevel()
    {
       SceneManager.LoadScene("randomLevel");
-    }
+   }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+   public void QuitGame()
+   {
+      Application.Quit();
+   }
 }

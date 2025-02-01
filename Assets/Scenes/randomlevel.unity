@@ -25950,6 +25950,7 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 3498ba68c28d60b4baea3ce0971ef0bc, type: 2}
   - name: electric
     tile: {fileID: 11400000, guid: 5caf96bba3fd3a44b8f98be6a9d9c55d, type: 2}
+  randomLevelHelper: 1
   startPointsHelper: []
   endPointsHelper: []
   vizXHelper: {fileID: 2067046261}

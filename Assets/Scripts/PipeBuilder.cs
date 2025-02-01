@@ -74,8 +74,6 @@ public class PipeBuilder : MonoBehaviour
 
     void SelectPipe(int index)
     {
-        // Ensure index stays between 0 and the last valid array index
-        // Example: if tiles array has 4 elements, valid indices are 0,1,2,3
         selectedPipe = Mathf.Clamp(index, 0, tiles.Length - 1);
         RenderSelectedPipe();
     }

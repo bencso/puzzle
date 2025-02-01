@@ -66,6 +66,9 @@ public class PipeHelper : MonoBehaviour
     [SerializeField]
     private PreTiles[] endTilesHelper;
 
+    [SerializeField]
+    private bool randomLevelHelper;
+    public static bool randomLevel = false;
     public static Element[] elements;
     public static Tile[] buzatiles;
     public static Tilemap buzaTilemap;
@@ -144,6 +147,7 @@ public class PipeHelper : MonoBehaviour
         sewageX = sewageXHelper;
         sewageP = sewagePHelper;
         houseN = houseNHelper;
+        randomLevel = randomLevelHelper;
         startPoints.Add("electric", new List<int[]>());
         startPoints.Add("water", new List<int[]>());
         startPoints.Add("sewage", new List<int[]>());
@@ -259,12 +263,12 @@ public class PipeHelper : MonoBehaviour
             foreach (var end in ends)
             {
                 if (ends.Any(end => end[0] == position.x && end[1] == position.y && end[2] == (PipeBuilder.currentLayer == 0 ? 1 : 0)))
-            if (ends.Any(end => end[0] == position.x && end[1] == position.y && end[2] == (PipeBuilder.currentLayer == 0 ? 1 : 0)))
-            {
-                return true;
+                    if (ends.Any(end => end[0] == position.x && end[1] == position.y && end[2] == (PipeBuilder.currentLayer == 0 ? 1 : 0)))
+                    {
+                        return true;
+                    }
             }
         }
-    }
         return false;
     }
 
@@ -682,6 +686,14 @@ public class PipeHelper : MonoBehaviour
         {
             reset();
             LevelHelper.setMaxLevel();
+            if (randomLevel)
+            {
+                MenuHelper.successText = "randomlevel";
+            }
+            else
+            {
+                MenuHelper.successText = "levelmenu";
+            }
             SceneManager.LoadScene("EndScreen");
             return;
         }

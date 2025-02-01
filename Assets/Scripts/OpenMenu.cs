@@ -36,7 +36,6 @@ public class OpenMenu : MonoBehaviour
                     for (int y = 0; y < uiBounds.size.y; y++)
                     {
                         TileBase tile = allTiles[x + y * uiBounds.size.x];
-                        //TODO: Átírni a nevet a megfelelőre
                         if (tile != null && tile.name == "pendroid_assets_253")
                         {
                             tilePosition = new Vector3Int(x + uiBounds.x, y + uiBounds.y, 0);
