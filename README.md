@@ -14,10 +14,10 @@ Ez a projekt a [PenDroid 2024/25](https://pendroid.uni-pannon.hu/verseny/hirek?v
 
 **Csapatnév:** new_project
 
-- **bencso** - [GitHub](https://github.com/bencso)
+- **Bábolnai Bence** - [GitHub](https://github.com/bencso)
 - **Katona Roland** - [GitHub](https://github.com/katroland)
-- **Gyurkovics Dominik** (UI fejlesztő) - [GitHub](https://github.com/gydoma)
-- **Trixep** - [GitHub](https://github.com/Trixep)
+- **Gyurkovics Dominik** - [GitHub](https://github.com/gydoma)
+- **Horváth Péter** - [GitHub](https://github.com/Trixep)
 
 ## ✨ Funkciók
 
@@ -43,10 +43,6 @@ A projekt során gyakoroltuk:
 - Logikai/puzzle mechanikák és infrastruktúra-rendszerek tervezése
 - Random map generálás kialakítása
 - Csapatmunka versenyhelyzetben
-
-## 🤝 Közreműködés
-
-Ez egy lezárt verseny projekt.
 
 ---
 
