@@ -46,7 +46,7 @@ A projekt során gyakoroltuk:
 
 ## 🤝 Közreműködés
 
-Ez egy lezárt verseny projekt, amely csapatmunkában készült.
+Ez egy lezárt verseny projekt.
 
 ---
 
