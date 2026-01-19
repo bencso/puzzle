@@ -1,4 +1,4 @@
-# puzzle 🌍🧩
+# Puzzle 🌍🧩
 
 > Logikai városépítős játék - PenDroid versenyfeladat
 
